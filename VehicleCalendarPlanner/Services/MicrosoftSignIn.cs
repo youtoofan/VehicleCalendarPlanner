@@ -10,7 +10,7 @@ namespace VehicleCalendarPlanner.Services;
 public sealed class MicrosoftSignIn : IAccessTokenProvider
 {
     // This is the public client ID from the family's existing To Do app, not a secret.
-    public const string ClientId = "cb8a627b-0974-40cd-8ced-aa5c8e6659c5";
+    public const string ClientId = "4ebb2fae-d55b-4c44-94c0-9c14c325bb6a";
     private static readonly string[] Scopes = ["Calendars.ReadWrite"];
     private readonly IPublicClientApplication _client;
     private readonly SemaphoreSlim _gate = new(1, 1);
@@ -20,7 +20,7 @@ public sealed class MicrosoftSignIn : IAccessTokenProvider
         var builder = PublicClientApplicationBuilder.Create(ClientId)
             .WithAuthority(AadAuthorityAudience.PersonalMicrosoftAccount);
 #if ANDROID
-        builder = builder.WithRedirectUri($"msal{ClientId}://vehiclecalendar");
+        builder = builder.WithRedirectUri($"msal{ClientId}://auth");
 #else
         builder = builder.WithDefaultRedirectUri();
 #endif

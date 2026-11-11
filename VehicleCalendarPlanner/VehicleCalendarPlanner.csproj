@@ -68,7 +68,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="11.0.10" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="11.0.0" />
 		<PackageReference Include="Microsoft.Identity.Client" Version="4.92.0" />
 		<ProjectReference Include="..\VehicleCalendarPlanner.Core\VehicleCalendarPlanner.Core.csproj" />

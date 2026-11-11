@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="VehicleCalendarPlanner.SettingsPage"
+    BackgroundColor="#F4F7F5"
+    NavigationPage.HasNavigationBar="False">
+    <ContentPage.Resources>
+        <Style x:Key="SettingsButton" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="#3A796C" />
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="FontFamily" Value="OpenSansSemibold" />
+            <Setter Property="CornerRadius" Value="11" />
+            <Setter Property="MinimumHeightRequest" Value="44" />
+            <Setter Property="Padding" Value="14,8" />
+        </Style>
+        <Style x:Key="SecondaryButton" TargetType="Button" BasedOn="{StaticResource SettingsButton}">
+            <Setter Property="BackgroundColor" Value="#EDF5F0" />
+            <Setter Property="TextColor" Value="#315E55" />
+        </Style>
+    </ContentPage.Resources>
+    <Grid Padding="20,16" RowDefinitions="Auto,*" RowSpacing="14">
+        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+            <Button Text="&lt; Back" Style="{StaticResource SecondaryButton}" Clicked="OnBackClicked" />
+            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                <Label Text="Make it yours" FontSize="23" FontFamily="OpenSansSemibold" TextColor="#183D39"
+                       SemanticProperties.HeadingLevel="Level1" />
+                <Label Text="Your family, your vehicles, your calendar." FontSize="12" TextColor="#718681" />
+            </VerticalStackLayout>
+        </Grid>
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Spacing="14" MaximumWidthRequest="760" HorizontalOptions="Fill">
+                <Border BackgroundColor="White" Stroke="#DFEAE5" StrokeShape="RoundRectangle 16" Padding="16">
+                    <VerticalStackLayout Spacing="9">
+                        <Label Text="Microsoft family calendar" FontSize="18" FontFamily="OpenSansSemibold"
+                               TextColor="#183D39" SemanticProperties.HeadingLevel="Level2" />
+                        <Label x:Name="ConnectionLabel" TextColor="#668078" FontSize="13" LineBreakMode="WordWrap" />
+                        <FlexLayout Direction="Row" Wrap="Wrap">
+                            <Button x:Name="ConnectButton" Text="Connect / choose calendar"
+                                    Style="{StaticResource SettingsButton}" Clicked="OnConnectClicked"
+                                    Margin="0,0,8,6" />
+                            <Button x:Name="DisconnectButton" Text="Disconnect"
+                                    Style="{StaticResource SecondaryButton}" Clicked="OnDisconnectClicked"
+                                    Margin="0,0,8,6" />
+                        </FlexLayout>
+                        <Label Text="One shared sign-in is used on this dashboard. Everyone chooses their name when reserving."
+                               TextColor="#829890" FontSize="11" LineBreakMode="WordWrap" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border BackgroundColor="White" Stroke="#DFEAE5" StrokeShape="RoundRectangle 16" Padding="16">
+                    <VerticalStackLayout Spacing="8">
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                            <VerticalStackLayout>
+                                <Label Text="Family members" FontSize="18" FontFamily="OpenSansSemibold"
+                                       TextColor="#183D39" SemanticProperties.HeadingLevel="Level2" />
+                                <Label Text="Add everyone who shares a ride." FontSize="12" TextColor="#829890" />
+                            </VerticalStackLayout>
+                            <Button Grid.Column="1" Text="+ Add" Style="{StaticResource SecondaryButton}"
+                                    Clicked="OnAddPersonClicked" />
+                        </Grid>
+                        <VerticalStackLayout x:Name="PeopleList" Spacing="6" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border BackgroundColor="White" Stroke="#DFEAE5" StrokeShape="RoundRectangle 16" Padding="16">
+                    <VerticalStackLayout Spacing="8">
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                            <VerticalStackLayout>
+                                <Label Text="Vehicles and transport" FontSize="18" FontFamily="OpenSansSemibold"
+                                       TextColor="#183D39" SemanticProperties.HeadingLevel="Level2" />
+                                <Label Text="Name each individual car, bike, or other ride." FontSize="12" TextColor="#829890" />
+                            </VerticalStackLayout>
+                            <Button Grid.Column="1" Text="+ Add" Style="{StaticResource SecondaryButton}"
+                                    Clicked="OnAddVehicleClicked" />
+                        </Grid>
+                        <VerticalStackLayout x:Name="VehiclesList" Spacing="6" />
+                    </VerticalStackLayout>
+                </Border>
+                <Label Text="Family members and vehicles are stored on this device. Reservations are stored in the selected Microsoft calendar."
+                       TextColor="#829890" FontSize="11" Margin="4,0,4,12" LineBreakMode="WordWrap" />
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

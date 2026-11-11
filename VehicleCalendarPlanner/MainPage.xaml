@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="VehicleCalendarPlanner.MainPage"
+    BackgroundColor="#F4F7F5"
+    NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.Resources>
+        <Style x:Key="LightButton" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="#FFFFFF" />
+            <Setter Property="TextColor" Value="#285B55" />
+            <Setter Property="FontFamily" Value="OpenSansSemibold" />
+            <Setter Property="BorderColor" Value="#D6E4DF" />
+            <Setter Property="BorderWidth" Value="1" />
+            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="Padding" Value="12,8" />
+            <Setter Property="MinimumHeightRequest" Value="44" />
+        </Style>
+        <Style x:Key="PillButton" TargetType="Button" BasedOn="{StaticResource LightButton}">
+            <Setter Property="Padding" Value="13,8" />
+            <Setter Property="MinimumWidthRequest" Value="44" />
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid Padding="20,16" RowDefinitions="Auto,Auto,Auto,*" RowSpacing="12">
+        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+            <HorizontalStackLayout Spacing="12" VerticalOptions="Center">
+                <Border BackgroundColor="#DCEDE7" StrokeThickness="0" StrokeShape="RoundRectangle 14"
+                        WidthRequest="48" HeightRequest="48">
+                    <Image Source="vehicle_car.png" WidthRequest="30" HeightRequest="30"
+                           AutomationProperties.IsInAccessibleTree="False" />
+                </Border>
+                <VerticalStackLayout Spacing="0" VerticalOptions="Center">
+                    <Label Text="Family Wheels" FontSize="23" FontFamily="OpenSansSemibold"
+                           TextColor="#183D39" SemanticProperties.HeadingLevel="Level1" />
+                    <Label Text="A little planning, a lot more peace." FontSize="12" TextColor="#718681" />
+                </VerticalStackLayout>
+            </HorizontalStackLayout>
+            <HorizontalStackLayout Grid.Column="1" Spacing="8" VerticalOptions="Center">
+                <Button x:Name="SyncButton" Text="Sync" Style="{StaticResource LightButton}" Clicked="OnRefreshClicked" />
+                <Button x:Name="SettingsButton" Text="Settings" Style="{StaticResource LightButton}" Clicked="OnSettingsClicked" />
+            </HorizontalStackLayout>
+        </Grid>
+
+        <Border Grid.Row="1" x:Name="StatusCard" BackgroundColor="#E4F1EC" StrokeThickness="0"
+                StrokeShape="RoundRectangle 12" Padding="12,7">
+            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="8">
+                <ActivityIndicator x:Name="SavingIndicator" IsVisible="False" IsRunning="False"
+                                   WidthRequest="18" HeightRequest="18" Color="#3A796C"
+                                   SemanticProperties.Description="Updating reservation" />
+                <Label x:Name="StatusLabel" Grid.Column="1" Text="Set up your family calendar to get started."
+                       TextColor="#315E55" FontSize="12" VerticalOptions="Center" LineBreakMode="WordWrap" />
+                <Button x:Name="SampleButton" Grid.Column="2" Text="Try sample"
+                        Style="{StaticResource LightButton}" Clicked="OnSampleClicked" />
+            </Grid>
+        </Border>
+
+        <Grid x:Name="PeriodControls" Grid.Row="2" ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto"
+              ColumnSpacing="10" RowSpacing="4">
+            <HorizontalStackLayout x:Name="PeriodNavigation" Spacing="6" VerticalOptions="Center">
+                <Button Text="&lt;" Style="{StaticResource PillButton}" Clicked="OnPreviousClicked"
+                        SemanticProperties.Description="Previous week or month" />
+                <Button Text="&gt;" Style="{StaticResource PillButton}" Clicked="OnNextClicked"
+                        SemanticProperties.Description="Next week or month" />
+                <Button Text="Today" Style="{StaticResource PillButton}" Clicked="OnTodayClicked" />
+            </HorizontalStackLayout>
+            <Label x:Name="PeriodLabel" Grid.Column="1" TextColor="#183D39" FontSize="17"
+                   FontFamily="OpenSansSemibold" VerticalOptions="Center" LineBreakMode="TailTruncation"
+                   SemanticProperties.HeadingLevel="Level2" />
+            <HorizontalStackLayout x:Name="ViewSwitch" Grid.Column="2" Spacing="4"
+                                   HorizontalOptions="End" VerticalOptions="Center">
+                <Button x:Name="WeekButton" Text="Week" Style="{StaticResource PillButton}" Clicked="OnWeekClicked" />
+                <Button x:Name="MonthButton" Text="Month" Style="{StaticResource PillButton}" Clicked="OnMonthClicked" />
+            </HorizontalStackLayout>
+        </Grid>
+
+        <Grid x:Name="AdaptiveLayout" Grid.Row="3" ColumnDefinitions="*,180" RowDefinitions="*"
+              ColumnSpacing="12" RowSpacing="12">
+            <Border x:Name="CalendarCard" BackgroundColor="White" Stroke="#DFEAE5"
+                    StrokeShape="RoundRectangle 18" Padding="14">
+                <Grid RowDefinitions="Auto,*" RowSpacing="9">
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                        <VerticalStackLayout Spacing="1">
+                            <Label x:Name="CalendarHeading" Text="THE WEEK AHEAD" TextColor="#69837B"
+                                   FontSize="11" FontFamily="OpenSansSemibold" />
+                            <Label x:Name="InstructionLabel" Text="Drag a vehicle onto a day, or tap to choose."
+                                   TextColor="#52716A" FontSize="12" LineBreakMode="WordWrap" />
+                        </VerticalStackLayout>
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <ScrollView x:Name="WeekScroll">
+                            <VerticalStackLayout x:Name="CalendarContent" Spacing="7" />
+                        </ScrollView>
+                        <Grid x:Name="MonthArea" RowDefinitions="*,Auto" RowSpacing="8" IsVisible="False">
+                            <ScrollView x:Name="MonthScroll" SizeChanged="OnMonthViewportSizeChanged">
+                                <Grid x:Name="MonthGrid" ColumnSpacing="4" RowSpacing="4" />
+                            </ScrollView>
+                            <Border Grid.Row="1" BackgroundColor="#F4F8F5" StrokeThickness="0"
+                                    StrokeShape="RoundRectangle 12" Padding="8,4">
+                                <Grid RowDefinitions="Auto,44" RowSpacing="2">
+                                    <Label x:Name="MonthDetailsHeading" FontSize="14" FontFamily="OpenSansSemibold"
+                                           TextColor="#244D48" SemanticProperties.HeadingLevel="Level2" />
+                                    <ScrollView Grid.Row="1" Orientation="Horizontal">
+                                        <HorizontalStackLayout x:Name="MonthDetails" Spacing="6" />
+                                    </ScrollView>
+                                </Grid>
+                            </Border>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Border>
+
+            <Border x:Name="VehicleRail" Grid.Column="1" BackgroundColor="#EAF3EF" StrokeThickness="0"
+                    StrokeShape="RoundRectangle 18" Padding="12">
+                <Grid RowDefinitions="Auto,Auto,*,Auto" RowSpacing="8">
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="YOUR RIDES" TextColor="#66847B" FontSize="11"
+                               FontFamily="OpenSansSemibold" SemanticProperties.HeadingLevel="Level2" />
+                        <Label Text="Pick a vehicle" TextColor="#183D39" FontSize="17"
+                               FontFamily="OpenSansSemibold" />
+                    </VerticalStackLayout>
+                    <Label x:Name="AvailabilityLabel" Grid.Row="1" TextColor="#648078" FontSize="11"
+                           LineBreakMode="WordWrap" />
+                    <ScrollView x:Name="VehicleScroll" Grid.Row="2" Orientation="Vertical">
+                        <FlexLayout x:Name="VehicleItems" Direction="Column" Wrap="NoWrap" />
+                    </ScrollView>
+                    <Button x:Name="ManageVehiclesButton" Grid.Row="3" Text="+ Manage vehicles" Style="{StaticResource LightButton}"
+                            Clicked="OnSettingsClicked" />
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</ContentPage>

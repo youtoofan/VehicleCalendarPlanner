@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="VehicleCalendarPlanner\VehicleCalendarPlanner.csproj" />
+  <Project Path="VehicleCalendarPlanner.Core\VehicleCalendarPlanner.Core.csproj" />
+  <Project Path="VehicleCalendarPlanner.Tests\VehicleCalendarPlanner.Tests.csproj" />
+</Solution>

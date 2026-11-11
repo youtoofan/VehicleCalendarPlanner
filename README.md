@@ -2,18 +2,6 @@
 
 A shared vehicle calendar for an Android tablet or Windows dashboard. Family members do not need individual app logins: one Microsoft account connects the dashboard, and each person chooses their name when reserving.
 
-## Set up the calendar
-
-The app reuses the public Microsoft app registration from the existing To Do project: `cb8a627b-0974-40cd-8ced-aa5c8e6659c5`. In the [Microsoft Entra admin center](https://entra.microsoft.com/), check that this registration:
-
-1. Supports personal Microsoft accounts. Keep any existing account types and permissions needed by the To Do app.
-2. Has the **Microsoft Graph delegated** permission `Calendars.ReadWrite`. The account owner must consent when prompted.
-3. Under **Authentication > Mobile and desktop applications**, has these redirect URIs:
-   - Windows: `http://localhost`
-   - Android: `msalcb8a627b-0974-40cd-8ced-aa5c8e6659c5://vehiclecalendar`
-
-Changing the registration also affects the existing To Do app; do not remove its existing redirects or permissions. No client secret is needed. The calendar permission grants access to the signed-in account's calendars, not just the calendar selected in this app.
-
 Open **Settings > Connect / choose calendar**, sign in with a personal Microsoft account, and choose an editable calendar. Then add each family member and each individual car, bicycle, or other vehicle. The transport type and picture are configurable; vehicles and people can be hidden and restored.
 
 The app lists calendars returned as editable by Microsoft Graph. Some Outlook family/group or shared calendars may not be exposed or writable this way. If the existing family calendar is missing or fails to sync, sign in as its owner; alternatively, create a calendar owned by the connected account in Outlook, share it with the family, and select it in the app. Actual access depends on Microsoft's account and sharing configuration.

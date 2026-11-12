@@ -9,8 +9,11 @@ namespace VehicleCalendarPlanner.Services;
 
 public sealed class MicrosoftSignIn : IAccessTokenProvider
 {
-    // This is the public client ID from the family's existing To Do app, not a secret.
+    // Public application registration ID, not a secret.
     public const string ClientId = "4ebb2fae-d55b-4c44-94c0-9c14c325bb6a";
+    public const string AndroidRedirectScheme = "msal" + ClientId;
+    public const string AndroidRedirectHost = "auth";
+    public const string AndroidRedirectUri = AndroidRedirectScheme + "://" + AndroidRedirectHost;
     private static readonly string[] Scopes = ["Calendars.ReadWrite"];
     private readonly IPublicClientApplication _client;
     private readonly SemaphoreSlim _gate = new(1, 1);
@@ -20,7 +23,7 @@ public sealed class MicrosoftSignIn : IAccessTokenProvider
         var builder = PublicClientApplicationBuilder.Create(ClientId)
             .WithAuthority(AadAuthorityAudience.PersonalMicrosoftAccount);
 #if ANDROID
-        builder = builder.WithRedirectUri($"msal{ClientId}://auth");
+        builder = builder.WithRedirectUri(AndroidRedirectUri);
 #else
         builder = builder.WithDefaultRedirectUri();
 #endif
@@ -77,10 +80,10 @@ public sealed class MicrosoftSignIn : IAccessTokenProvider
             var interactive = _client.AcquireTokenInteractive(Scopes);
 #if ANDROID
             interactive = interactive.WithParentActivityOrWindow(
-                Platform.CurrentActivity ?? throw new InvalidOperationException("The Android sign-in window is unavailable."));
+                Platform.CurrentActivity ?? throw new InvalidOperationException(AppResources.AndroidSignInUnavailable));
 #elif WINDOWS
             var window = Application.Current?.Windows.FirstOrDefault()?.Handler?.PlatformView as MauiWinUIWindow
-                ?? throw new InvalidOperationException("The Windows sign-in window is unavailable.");
+                ?? throw new InvalidOperationException(AppResources.WindowsSignInUnavailable);
             interactive = interactive.WithParentActivityOrWindow(window.WindowHandle);
 #endif
             var result = await interactive.ExecuteAsync(cancellationToken);

@@ -2,6 +2,7 @@
 <ContentPage
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:VehicleCalendarPlanner"
     x:Class="VehicleCalendarPlanner.MainPage"
     BackgroundColor="#F4F7F5"
     NavigationPage.HasNavigationBar="False">
@@ -34,12 +35,12 @@
                 <VerticalStackLayout Spacing="0" VerticalOptions="Center">
                     <Label Text="Family Wheels" FontSize="23" FontFamily="OpenSansSemibold"
                            TextColor="#183D39" SemanticProperties.HeadingLevel="Level1" />
-                    <Label Text="A little planning, a lot more peace." FontSize="12" TextColor="#718681" />
+                    <Label Text="{x:Static local:AppResources.Tagline}" FontSize="12" TextColor="#718681" />
                 </VerticalStackLayout>
             </HorizontalStackLayout>
             <HorizontalStackLayout Grid.Column="1" Spacing="8" VerticalOptions="Center">
-                <Button x:Name="SyncButton" Text="Sync" Style="{StaticResource LightButton}" Clicked="OnRefreshClicked" />
-                <Button x:Name="SettingsButton" Text="Settings" Style="{StaticResource LightButton}" Clicked="OnSettingsClicked" />
+                <Button x:Name="SyncButton" Text="{x:Static local:AppResources.Sync}" Style="{StaticResource LightButton}" Clicked="OnRefreshClicked" />
+                <Button x:Name="SettingsButton" Text="{x:Static local:AppResources.Settings}" Style="{StaticResource LightButton}" Clicked="OnSettingsClicked" />
             </HorizontalStackLayout>
         </Grid>
 
@@ -48,10 +49,10 @@
             <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="8">
                 <ActivityIndicator x:Name="SavingIndicator" IsVisible="False" IsRunning="False"
                                    WidthRequest="18" HeightRequest="18" Color="#3A796C"
-                                   SemanticProperties.Description="Updating reservation" />
-                <Label x:Name="StatusLabel" Grid.Column="1" Text="Set up your family calendar to get started."
+                                   SemanticProperties.Description="{x:Static local:AppResources.UpdatingReservation}" />
+                <Label x:Name="StatusLabel" Grid.Column="1" Text="{x:Static local:AppResources.StatusInitial}"
                        TextColor="#315E55" FontSize="12" VerticalOptions="Center" LineBreakMode="WordWrap" />
-                <Button x:Name="SampleButton" Grid.Column="2" Text="Try sample"
+                <Button x:Name="SampleButton" Grid.Column="2" Text="{x:Static local:AppResources.TrySample}"
                         Style="{StaticResource LightButton}" Clicked="OnSampleClicked" />
             </Grid>
         </Border>
@@ -60,18 +61,18 @@
               ColumnSpacing="10" RowSpacing="4">
             <HorizontalStackLayout x:Name="PeriodNavigation" Spacing="6" VerticalOptions="Center">
                 <Button Text="&lt;" Style="{StaticResource PillButton}" Clicked="OnPreviousClicked"
-                        SemanticProperties.Description="Previous week or month" />
+                        SemanticProperties.Description="{x:Static local:AppResources.PreviousPeriod}" />
                 <Button Text="&gt;" Style="{StaticResource PillButton}" Clicked="OnNextClicked"
-                        SemanticProperties.Description="Next week or month" />
-                <Button Text="Today" Style="{StaticResource PillButton}" Clicked="OnTodayClicked" />
+                        SemanticProperties.Description="{x:Static local:AppResources.NextPeriod}" />
+                <Button Text="{x:Static local:AppResources.Today}" Style="{StaticResource PillButton}" Clicked="OnTodayClicked" />
             </HorizontalStackLayout>
             <Label x:Name="PeriodLabel" Grid.Column="1" TextColor="#183D39" FontSize="17"
                    FontFamily="OpenSansSemibold" VerticalOptions="Center" LineBreakMode="TailTruncation"
                    SemanticProperties.HeadingLevel="Level2" />
             <HorizontalStackLayout x:Name="ViewSwitch" Grid.Column="2" Spacing="4"
                                    HorizontalOptions="End" VerticalOptions="Center">
-                <Button x:Name="WeekButton" Text="Week" Style="{StaticResource PillButton}" Clicked="OnWeekClicked" />
-                <Button x:Name="MonthButton" Text="Month" Style="{StaticResource PillButton}" Clicked="OnMonthClicked" />
+                <Button x:Name="WeekButton" Text="{x:Static local:AppResources.Week}" Style="{StaticResource PillButton}" Clicked="OnWeekClicked" />
+                <Button x:Name="MonthButton" Text="{x:Static local:AppResources.Month}" Style="{StaticResource PillButton}" Clicked="OnMonthClicked" />
             </HorizontalStackLayout>
         </Grid>
 
@@ -82,9 +83,9 @@
                 <Grid RowDefinitions="Auto,*" RowSpacing="9">
                     <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
                         <VerticalStackLayout Spacing="1">
-                            <Label x:Name="CalendarHeading" Text="THE WEEK AHEAD" TextColor="#69837B"
+                            <Label x:Name="CalendarHeading" Text="{x:Static local:AppResources.WeekAhead}" TextColor="#69837B"
                                    FontSize="11" FontFamily="OpenSansSemibold" />
-                            <Label x:Name="InstructionLabel" Text="Drag a vehicle onto a day, or tap to choose."
+                            <Label x:Name="InstructionLabel" Text="{x:Static local:AppResources.DragInstruction}"
                                    TextColor="#52716A" FontSize="12" LineBreakMode="WordWrap" />
                         </VerticalStackLayout>
                     </Grid>
@@ -115,9 +116,9 @@
                     StrokeShape="RoundRectangle 18" Padding="12">
                 <Grid RowDefinitions="Auto,Auto,*,Auto" RowSpacing="8">
                     <VerticalStackLayout Spacing="2">
-                        <Label Text="YOUR RIDES" TextColor="#66847B" FontSize="11"
+                        <Label Text="{x:Static local:AppResources.YourRides}" TextColor="#66847B" FontSize="11"
                                FontFamily="OpenSansSemibold" SemanticProperties.HeadingLevel="Level2" />
-                        <Label Text="Pick a vehicle" TextColor="#183D39" FontSize="17"
+                        <Label Text="{x:Static local:AppResources.PickVehicle}" TextColor="#183D39" FontSize="17"
                                FontFamily="OpenSansSemibold" />
                     </VerticalStackLayout>
                     <Label x:Name="AvailabilityLabel" Grid.Row="1" TextColor="#648078" FontSize="11"
@@ -125,7 +126,7 @@
                     <ScrollView x:Name="VehicleScroll" Grid.Row="2" Orientation="Vertical">
                         <FlexLayout x:Name="VehicleItems" Direction="Column" Wrap="NoWrap" />
                     </ScrollView>
-                    <Button x:Name="ManageVehiclesButton" Grid.Row="3" Text="+ Manage vehicles" Style="{StaticResource LightButton}"
+                    <Button x:Name="ManageVehiclesButton" Grid.Row="3" Text="{x:Static local:AppResources.ManageVehicles}" Style="{StaticResource LightButton}"
                             Clicked="OnSettingsClicked" />
                 </Grid>
             </Border>

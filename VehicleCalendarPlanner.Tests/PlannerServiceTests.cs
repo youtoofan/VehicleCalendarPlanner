@@ -1,3 +1,4 @@
+using System.Globalization;
 using VehicleCalendarPlanner.Core;
 using Xunit;
 
@@ -5,6 +6,36 @@ namespace VehicleCalendarPlanner.Tests;
 
 public sealed class PlannerServiceTests
 {
+    [Fact]
+    public async Task MessagesAndReservationBodyUseBelgianDutchResources()
+    {
+        var original = CultureInfo.CurrentUICulture;
+        CultureInfo.CurrentUICulture = new CultureInfo("nl-BE");
+        try
+        {
+            var settings = DemoCalendar.CreateSettings();
+            var calendar = new DemoCalendar();
+            var planner = new PlannerService();
+            var date = new DateOnly(2026, 11, 11);
+            var car = settings.Vehicles[0];
+            await planner.BookAsync(calendar, settings, car.Id, settings.People[0].Id, date);
+
+            var exception = await Assert.ThrowsAsync<BookingConflictException>(() =>
+                planner.BookAsync(calendar, settings, car.Id, settings.People[1].Id, date));
+            Assert.Contains("is al gereserveerd voor", exception.Message);
+            Assert.Equal("Voorbeeld-gezinsagenda", settings.CalendarName);
+
+            var reservation = (await calendar.GetEventsAsync(DemoCalendar.CalendarId, date, date.AddDays(1)))[0].Reservation!;
+            var body = ReservationMarker.Body(reservation);
+            Assert.StartsWith("Voertuig: ", body);
+            Assert.Equal(reservation, ReservationMarker.Read(ReservationMarker.Subject(reservation), body).Reservation);
+        }
+        finally
+        {
+            CultureInfo.CurrentUICulture = original;
+        }
+    }
+
     [Fact]
     public async Task FamilyOfFourCanBookFiveVehiclesButChildrenCannotDoubleBookABike()
     {

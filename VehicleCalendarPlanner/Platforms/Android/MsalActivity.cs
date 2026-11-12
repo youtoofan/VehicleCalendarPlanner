@@ -2,6 +2,7 @@ using Android.App;
 using Android.Content;
 using Android.Content.PM;
 using Microsoft.Identity.Client;
+using VehicleCalendarPlanner.Services;
 
 namespace VehicleCalendarPlanner;
 
@@ -9,6 +10,6 @@ namespace VehicleCalendarPlanner;
     ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize)]
 [IntentFilter(new[] { Intent.ActionView },
     Categories = new[] { Intent.CategoryDefault, Intent.CategoryBrowsable },
-    DataScheme = "msalcb8a627b-0974-40cd-8ced-aa5c8e6659c5",
-    DataHost = "vehiclecalendar")]
+    DataScheme = MicrosoftSignIn.AndroidRedirectScheme,
+    DataHost = MicrosoftSignIn.AndroidRedirectHost)]
 public sealed class MsalActivity : BrowserTabActivity;

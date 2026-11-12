@@ -20,7 +20,7 @@ public sealed class MicrosoftGraphCalendar(HttpClient http, IAccessTokenProvider
             var owner = item.TryGetProperty("owner", out var ownerJson) && ownerJson.ValueKind == JsonValueKind.Object
                 ? OptionalString(ownerJson, "name") ?? OptionalString(ownerJson, "address")
                 : null;
-            return new CalendarInfo(RequiredString(item, "id"), OptionalString(item, "name") ?? "(Unnamed calendar)",
+            return new CalendarInfo(RequiredString(item, "id"), OptionalString(item, "name") ?? CoreResources.UnnamedCalendar,
                 item.TryGetProperty("canEdit", out var canEdit) && canEdit.ValueKind == JsonValueKind.True, owner);
         }).ToList();
     }
@@ -80,7 +80,7 @@ public sealed class MicrosoftGraphCalendar(HttpClient http, IAccessTokenProvider
         catch (Exception ex) when (ex is HttpRequestException or TaskCanceledException)
         {
             throw new ReservationWriteUncertainException(
-                "The connection was interrupted while saving. The reservation may have been created; refresh the calendar before trying again.", ex);
+                CoreResources.SaveInterrupted, ex);
         }
 
         using (response)
@@ -93,21 +93,21 @@ public sealed class MicrosoftGraphCalendar(HttpClient http, IAccessTokenProvider
                                                   (int)response.StatusCode >= 500)
             {
                 throw new ReservationWriteUncertainException(
-                    "Microsoft could not confirm the save. The reservation may have been created; refresh the calendar before trying again.", ex);
+                    CoreResources.SaveNotConfirmed, ex);
             }
             try
             {
                 using var document = await ReadJsonAsync(response, cancellationToken);
                 var entry = ParseEvent(document.RootElement);
                 if (entry.Reservation?.ReservationId != reservation.ReservationId)
-                    throw new InvalidDataException("The saved event did not contain the expected reservation details.");
+                    throw new InvalidDataException(CoreResources.SavedEventMissingDetails);
                 return entry;
             }
             catch (Exception ex) when (ex is JsonException or InvalidDataException or IOException or
                                        HttpRequestException or TaskCanceledException)
             {
                 throw new ReservationWriteUncertainException(
-                    "Microsoft accepted the request, but its result could not be verified. The reservation may have been created; refresh the calendar before trying again.", ex);
+                    CoreResources.SaveResultUnverified, ex);
             }
         }
     }
@@ -121,7 +121,7 @@ public sealed class MicrosoftGraphCalendar(HttpClient http, IAccessTokenProvider
         if (response.StatusCode == HttpStatusCode.NotFound)
             return;
         if (response.StatusCode == HttpStatusCode.PreconditionFailed)
-            throw new InvalidOperationException("This event changed in Outlook. Refresh before removing it.");
+            throw new InvalidOperationException(CoreResources.EventChangedInOutlook);
         await EnsureSuccessAsync(response, cancellationToken);
     }
 
@@ -134,25 +134,25 @@ public sealed class MicrosoftGraphCalendar(HttpClient http, IAccessTokenProvider
         {
             var uri = ResolveGraphUri(next);
             if (!seen.Add(uri.AbsoluteUri))
-                throw new InvalidDataException("Microsoft Graph returned a repeated page link.");
+                throw new InvalidDataException(CoreResources.GraphRepeatedPageLink);
             using var request = await CreateRequestAsync(HttpMethod.Get, uri.AbsoluteUri, cancellationToken);
             using var response = await http.SendAsync(request, cancellationToken);
             await EnsureSuccessAsync(response, cancellationToken);
             using var document = await ReadJsonAsync(response, cancellationToken);
             if (document.RootElement.ValueKind != JsonValueKind.Object ||
                 !document.RootElement.TryGetProperty("value", out var values) || values.ValueKind != JsonValueKind.Array)
-                throw new InvalidDataException("Microsoft Graph returned an incomplete calendar response.");
+                throw new InvalidDataException(CoreResources.GraphIncompleteResponse);
             foreach (var value in values.EnumerateArray())
             {
                 if (value.ValueKind != JsonValueKind.Object)
-                    throw new InvalidDataException("Microsoft Graph returned an invalid calendar item.");
+                    throw new InvalidDataException(CoreResources.GraphInvalidItem);
                 results.Add(value.Clone());
             }
             if (document.RootElement.TryGetProperty("@odata.nextLink", out var nextLink))
             {
                 next = nextLink.ValueKind == JsonValueKind.String ? nextLink.GetString() : null;
                 if (string.IsNullOrWhiteSpace(next))
-                    throw new InvalidDataException("Microsoft Graph returned an invalid page link.");
+                    throw new InvalidDataException(CoreResources.GraphInvalidPageLink);
             }
             else
                 next = null;
@@ -179,7 +179,7 @@ public sealed class MicrosoftGraphCalendar(HttpClient http, IAccessTokenProvider
             !string.Equals(uri.Host, baseAddress.Host, StringComparison.OrdinalIgnoreCase) ||
             uri.Port != baseAddress.Port ||
             !uri.AbsolutePath.StartsWith(baseAddress.AbsolutePath, StringComparison.Ordinal))
-            throw new InvalidDataException("Microsoft Graph returned an unsafe page link.");
+            throw new InvalidDataException(CoreResources.GraphUnsafePageLink);
         return uri;
     }
 
@@ -195,13 +195,13 @@ public sealed class MicrosoftGraphCalendar(HttpClient http, IAccessTokenProvider
     private static CalendarEntry ParseEvent(JsonElement item)
     {
         if (item.ValueKind != JsonValueKind.Object)
-            throw new InvalidDataException("Microsoft Graph returned an invalid event.");
+            throw new InvalidDataException(CoreResources.GraphInvalidEvent);
         var id = RequiredString(item, "id");
-        var subject = OptionalString(item, "subject") ?? "(No title)";
+        var subject = OptionalString(item, "subject") ?? CoreResources.NoTitle;
         var start = ParseDateTime(item, "start");
         var end = ParseDateTime(item, "end");
         if (end <= start)
-            throw new InvalidDataException($"The event '{subject}' has an invalid date range.");
+            throw new InvalidDataException(string.Format(CoreResources.EventInvalidDateRange, subject));
         var body = item.TryGetProperty("body", out var bodyJson) && bodyJson.ValueKind == JsonValueKind.Object
             ? OptionalString(bodyJson, "content")
             : null;
@@ -215,14 +215,14 @@ public sealed class MicrosoftGraphCalendar(HttpClient http, IAccessTokenProvider
         if (!item.TryGetProperty(property, out var value) || value.ValueKind != JsonValueKind.Object ||
             !DateTime.TryParse(OptionalString(value, "dateTime"), CultureInfo.InvariantCulture,
                 DateTimeStyles.None, out var dateTime))
-            throw new InvalidDataException($"Microsoft Graph returned an event without a valid {property} time.");
+            throw new InvalidDataException(string.Format(CoreResources.EventInvalidTime, property));
         return DateTime.SpecifyKind(dateTime, DateTimeKind.Unspecified);
     }
 
     private static string RequiredString(JsonElement item, string property) =>
         OptionalString(item, property) is { Length: > 0 } value
             ? value
-            : throw new InvalidDataException($"Microsoft Graph omitted the {property} field.");
+            : throw new InvalidDataException(string.Format(CoreResources.GraphFieldMissing, property));
 
     private static string? OptionalString(JsonElement item, string property) =>
         item.TryGetProperty(property, out var value) && value.ValueKind == JsonValueKind.String ? value.GetString() : null;
@@ -237,7 +237,7 @@ public sealed class MicrosoftGraphCalendar(HttpClient http, IAccessTokenProvider
     {
         if (response.IsSuccessStatusCode)
             return;
-        var message = $"Microsoft calendar request failed ({(int)response.StatusCode}).";
+        var message = string.Format(CoreResources.GraphRequestFailed, (int)response.StatusCode);
         try
         {
             using var document = await ReadJsonAsync(response, cancellationToken);

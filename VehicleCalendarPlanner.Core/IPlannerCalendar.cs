@@ -18,7 +18,7 @@ public interface IAccessTokenProvider
 
 public sealed class AuthenticationRequiredException : Exception
 {
-    public AuthenticationRequiredException() : base("Connect the shared Microsoft account in Settings first.") { }
+    public AuthenticationRequiredException() : base(CoreResources.AuthenticationRequired) { }
 }
 
 public sealed class BookingConflictException(string message) : Exception(message);

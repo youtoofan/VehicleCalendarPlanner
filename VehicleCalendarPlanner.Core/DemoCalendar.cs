@@ -8,7 +8,7 @@ public sealed class DemoCalendar : IPlannerCalendar
     public static PlannerSettings CreateSettings() => new()
     {
         CalendarId = CalendarId,
-        CalendarName = "Sample family calendar",
+        CalendarName = CoreResources.SampleCalendarName,
         People =
         [
             new() { Name = "Alex", Color = "#467A76" },
@@ -18,16 +18,16 @@ public sealed class DemoCalendar : IPlannerCalendar
         ],
         Vehicles =
         [
-            new() { Name = "Car 1", Type = "Car", Icon = "car", Color = "#D9ECE7" },
-            new() { Name = "Car 2", Type = "Car", Icon = "car", Color = "#E8E8F7" },
-            new() { Name = "Car 3", Type = "Car", Icon = "car", Color = "#F8E9DB" },
-            new() { Name = "E-bike 1", Type = "Electric bike", Icon = "bike", Color = "#F7E5D8" },
-            new() { Name = "E-bike 2", Type = "Electric bike", Icon = "bike", Color = "#E5EBD7" }
+            new() { Name = string.Format(CoreResources.SampleCarName, 1), Type = CoreResources.SampleCarType, Icon = "car", Color = "#D9ECE7" },
+            new() { Name = string.Format(CoreResources.SampleCarName, 2), Type = CoreResources.SampleCarType, Icon = "car", Color = "#E8E8F7" },
+            new() { Name = string.Format(CoreResources.SampleCarName, 3), Type = CoreResources.SampleCarType, Icon = "car", Color = "#F8E9DB" },
+            new() { Name = "E-bike 1", Type = CoreResources.SampleElectricBikeType, Icon = "bike", Color = "#F7E5D8" },
+            new() { Name = "E-bike 2", Type = CoreResources.SampleElectricBikeType, Icon = "bike", Color = "#E5EBD7" }
         ]
     };
 
     public Task<IReadOnlyList<CalendarInfo>> GetCalendarsAsync(CancellationToken cancellationToken = default) =>
-        Task.FromResult<IReadOnlyList<CalendarInfo>>([new(CalendarId, "Sample family calendar", true, null)]);
+        Task.FromResult<IReadOnlyList<CalendarInfo>>([new(CalendarId, CoreResources.SampleCalendarName, true, null)]);
 
     public Task<IReadOnlyList<CalendarEntry>> GetEventsAsync(
         string calendarId, DateOnly start, DateOnly endExclusive, CancellationToken cancellationToken = default)
@@ -65,6 +65,6 @@ public sealed class DemoCalendar : IPlannerCalendar
     private static void CheckCalendar(string calendarId)
     {
         if (calendarId != CalendarId)
-            throw new InvalidOperationException("The sample calendar is not selected.");
+            throw new InvalidOperationException(CoreResources.SampleCalendarNotSelected);
     }
 }

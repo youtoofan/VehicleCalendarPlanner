@@ -178,12 +178,13 @@ public partial class MainPage : ContentPage
 
             var calendar = _session.Calendar;
             var calendarId = _session.Settings.CalendarId;
-            SampleButton.Text = _session.IsDemo ? "Exit sample" : "Try sample";
+            SampleButton.Text = _session.IsDemo ? AppResources.ExitSample : AppResources.TrySample;
+            SampleButton.IsVisible = _session.IsDemo || string.IsNullOrWhiteSpace(calendarId);
             if (string.IsNullOrWhiteSpace(calendarId))
             {
                 _entries = [];
                 _ready = false;
-                SetStatus("Connect your Microsoft calendar and add your family in Settings.", false);
+                SetStatus(AppResources.StatusConnect, false);
                 Render();
                 return;
             }
@@ -197,18 +198,18 @@ public partial class MainPage : ContentPage
                 _entries = entries;
                 _ready = true;
                 var conflicts = CountConflicts(entries);
-                var suffix = conflicts > 0 ? $" {conflicts} conflicting or damaged reservation(s) need attention." : "";
+                var suffix = conflicts > 0 ? string.Format(AppResources.ConflictSuffix, conflicts) : "";
                 SetStatus(_session.IsDemo
-                    ? $"SAMPLE MODE - changes are not saved or sent to Microsoft.{suffix}"
-                    : $"{_session.Settings.CalendarName} - updated {DateTime.Now:t}.{suffix}", conflicts > 0);
+                    ? string.Format(AppResources.StatusSample, suffix)
+                    : string.Format(AppResources.StatusUpdated, _session.Settings.CalendarName, DateTime.Now, suffix), conflicts > 0);
             }
             catch (Exception ex)
             {
                 Debug.WriteLine($"Calendar refresh failed: {ex}");
                 _ready = false;
-                SetStatus($"Calendar not up to date: {ex.Message} Reservations are unavailable until sync succeeds.", true);
+                SetStatus(string.Format(AppResources.StatusNotUpToDate, ex.Message), true);
                 if (showError)
-                    await DisplayAlertAsync("Could not sync", ex.Message, "OK");
+                    await DisplayAlertAsync(AppResources.CouldNotSync, ex.Message, AppResources.OK);
             }
             Render();
         }
@@ -241,7 +242,7 @@ public partial class MainPage : ContentPage
         {
             Debug.WriteLine($"Automatic refresh failed: {ex}");
             _ready = false;
-            SetStatus($"Automatic sync failed: {ex.Message}", true);
+            SetStatus(string.Format(AppResources.AutoSyncFailed, ex.Message), true);
         }
     }
 
@@ -259,7 +260,7 @@ public partial class MainPage : ContentPage
         PeriodLabel.Text = _monthView
             ? _selectedDate.ToString("MMMM yyyy", CultureInfo.CurrentCulture)
             : $"{start:d MMM} - {end.AddDays(-1):d MMM yyyy}";
-        CalendarHeading.Text = _monthView ? "THE MONTH AT A GLANCE" : "THE WEEK AHEAD";
+        CalendarHeading.Text = _monthView ? AppResources.MonthAtAGlance : AppResources.WeekAhead;
         UpdateInstruction();
         SetViewButton(WeekButton, !_monthView);
         SetViewButton(MonthButton, _monthView);
@@ -282,22 +283,22 @@ public partial class MainPage : ContentPage
     private void UpdateInstruction()
     {
         InstructionLabel.Text = _selectedVehicle is { } id && _session.Settings.Vehicles.FirstOrDefault(x => x.Id == id) is { } vehicle
-            ? $"Now tap a day for {vehicle.Name}, or drag the vehicle."
-            : "Drag a vehicle onto a day, or tap a vehicle and then a day.";
+            ? string.Format(AppResources.TapDayFor, vehicle.Name)
+            : AppResources.DragOrTap;
     }
 
     private void RenderVehicles()
     {
         VehicleItems.Clear();
         _vehicleCards.Clear();
-        AvailabilityLabel.Text = $"Availability for {_selectedDate:ddd d MMM}";
+        AvailabilityLabel.Text = string.Format(AppResources.AvailabilityFor, _selectedDate);
         var vehicles = _session.Settings.Vehicles.Where(x => x.IsActive).ToList();
         var damagedReservation = _entries.Any(x => x.OccursOn(_selectedDate) && x.IsDamagedReservation);
         if (vehicles.Count == 0)
         {
             VehicleItems.Add(new Label
             {
-                Text = "No vehicles yet. Add your family's rides in Settings.",
+                Text = AppResources.NoVehiclesYet,
                 TextColor = Color.FromArgb("#68827A"),
                 FontSize = 12,
                 Margin = new Thickness(2, 8)
@@ -308,9 +309,9 @@ public partial class MainPage : ContentPage
         foreach (var vehicle in vehicles)
         {
             var booked = _entries.FirstOrDefault(x => x.OccursOn(_selectedDate) && PlannerService.MatchesVehicle(x.Reservation, vehicle));
-            var status = !_ready ? "Sync needed" : booked?.Reservation is { } reservation
-                ? $"With {DisplayPerson(reservation)}"
-                : damagedReservation ? "Needs review" : "Available";
+            var status = !_ready ? AppResources.SyncNeeded : booked?.Reservation is { } reservation
+                ? string.Format(AppResources.WithPerson, DisplayPerson(reservation))
+                : damagedReservation ? AppResources.NeedsReview : AppResources.Available;
             var icon = new Image
             {
                 Source = $"vehicle_{SafeIcon(vehicle.Icon)}.png",
@@ -328,8 +329,6 @@ public partial class MainPage : ContentPage
                 UpdateVehicleSelection();
             }
 
-            var iconTap = new TapGestureRecognizer();
-            iconTap.Tapped += (_, _) => ToggleSelection();
             var iconBackground = new Border
             {
                 BackgroundColor = Color.FromArgb(vehicle.Color),
@@ -341,9 +340,8 @@ public partial class MainPage : ContentPage
                 VerticalOptions = LayoutOptions.Center,
                 AutomationId = $"vehicle-icon-{vehicle.Name}"
             };
-            SemanticProperties.SetDescription(iconBackground, $"Select or drag {vehicle.Name}");
-            AddDragSource(iconBackground, vehicle);
-            iconBackground.GestureRecognizers.Add(iconTap);
+            SemanticProperties.SetDescription(iconBackground, string.Format(AppResources.SelectOrDragVehicle, vehicle.Name));
+            AddVehicleGestures(iconBackground, vehicle, ToggleSelection);
             var name = new Label
             {
                 Text = vehicle.Name,
@@ -356,11 +354,8 @@ public partial class MainPage : ContentPage
                 LineBreakMode = LineBreakMode.TailTruncation,
                 MinimumHeightRequest = 24
             };
-            SemanticProperties.SetHint(name, "Select this vehicle, then choose a day, or drag it onto a day");
-            AddDragSource(name, vehicle);
-            var nameTap = new TapGestureRecognizer();
-            nameTap.Tapped += (_, _) => ToggleSelection();
-            name.GestureRecognizers.Add(nameTap);
+            SemanticProperties.SetHint(name, AppResources.VehicleNameHint);
+            AddVehicleGestures(name, vehicle, ToggleSelection);
             var select = new Button
             {
                 Text = status,
@@ -374,8 +369,8 @@ public partial class MainPage : ContentPage
                 Padding = 0,
                 MinimumHeightRequest = 44
             };
-            SemanticProperties.SetDescription(select, $"Select {vehicle.Name}. {status}");
-            SemanticProperties.SetHint(select, "Choose a calendar day after selecting this vehicle");
+            SemanticProperties.SetDescription(select, string.Format(AppResources.SelectVehicle, vehicle.Name, status));
+            SemanticProperties.SetHint(select, AppResources.VehicleSelectHint);
             select.Clicked += (_, _) => ToggleSelection();
             var nameAndStatus = new VerticalStackLayout { Spacing = 0, VerticalOptions = LayoutOptions.Center };
             nameAndStatus.Add(name);
@@ -407,12 +402,24 @@ public partial class MainPage : ContentPage
         }
     }
 
+    private void AddVehicleGestures(View source, Vehicle vehicle, Action toggleSelection)
+    {
+#if ANDROID
+        AddAndroidVehicleGestures(source, vehicle, toggleSelection);
+#else
+        AddDragSource(source, vehicle);
+        var tap = new TapGestureRecognizer();
+        tap.Tapped += (_, _) => toggleSelection();
+        source.GestureRecognizers.Add(tap);
+#endif
+    }
+
     private void AddDragSource(View source, Vehicle vehicle)
     {
         var drag = new DragGestureRecognizer { CanDrag = true };
         drag.DragStarting += (_, args) =>
         {
-            InstructionLabel.Text = $"Drag {vehicle.Name} onto a calendar day.";
+            InstructionLabel.Text = string.Format(AppResources.DragVehicleOntoDay, vehicle.Name);
             args.Data.Properties["FamilyWheelsVehicleId"] = vehicle.Id.ToString();
             args.Data.Text = $"{DragPrefix}{vehicle.Id}";
         };
@@ -446,12 +453,29 @@ public partial class MainPage : ContentPage
             MinimumHeightRequest = 58,
             VerticalOptions = LayoutOptions.Start
         };
-        SemanticProperties.SetDescription(dateButton, date.ToString("dddd, d MMMM yyyy", CultureInfo.CurrentCulture));
-        SemanticProperties.SetHint(dateButton, "Select this day or reserve the selected vehicle");
+        SemanticProperties.SetDescription(dateButton, DescribeDate(date));
+        SemanticProperties.SetHint(dateButton, AppResources.DayHint);
         dateButton.Clicked += async (_, _) => await RunUiAsync(() => SelectDayAsync(date));
         var details = new VerticalStackLayout { Spacing = 4, VerticalOptions = LayoutOptions.Center };
+        if (IsToday(date))
+            details.Add(new Border
+            {
+                BackgroundColor = Color.FromArgb(TodayAccent),
+                StrokeThickness = 0,
+                StrokeShape = new RoundRectangle { CornerRadius = 8 },
+                Padding = new Thickness(8, 2),
+                HorizontalOptions = LayoutOptions.Start,
+                InputTransparent = true,
+                Content = new Label
+                {
+                    Text = AppResources.Today.ToUpper(CultureInfo.CurrentCulture),
+                    TextColor = Colors.White,
+                    FontFamily = "OpenSansSemibold",
+                    FontSize = 10
+                }
+            });
         if (dayEvents.Count == 0)
-            details.Add(new Label { Text = "Open day - drop a vehicle here", TextColor = Color.FromArgb("#A1B3AC"), FontSize = 12 });
+            details.Add(new Label { Text = AppResources.OpenDay, TextColor = Color.FromArgb("#A1B3AC"), FontSize = 12 });
         else
             foreach (var entry in dayEvents)
                 details.Add(CreateEventView(entry, date));
@@ -474,7 +498,9 @@ public partial class MainPage : ContentPage
             Content = grid
         };
         AddDropTarget(border, date);
-        _dayViews[date] = new DayVisual(dateButton, border, false);
+        var visual = new DayVisual(dateButton, border, false);
+        _dayViews[date] = visual;
+        ApplyDayAppearance(date, visual);
         return border;
     }
 
@@ -524,9 +550,9 @@ public partial class MainPage : ContentPage
             };
             var summaries = events.Select(entry => DescribeEntry(entry, events)).ToArray();
             SemanticProperties.SetDescription(button,
-                $"{date.ToString("dddd, d MMMM yyyy", CultureInfo.CurrentCulture)}. " +
-                (summaries.Length == 0 ? "Nothing planned." : string.Join("; ", summaries)));
-            SemanticProperties.SetHint(button, "Select this day or reserve the selected vehicle");
+                $"{DescribeDate(date)}. " +
+                (summaries.Length == 0 ? AppResources.NothingPlanned : string.Join("; ", summaries)));
+            SemanticProperties.SetHint(button, AppResources.DayHint);
             button.Clicked += async (_, _) => await RunUiAsync(() => SelectDayAsync(date));
             var icons = new FlexLayout
             {
@@ -628,7 +654,7 @@ public partial class MainPage : ContentPage
             var damaged = preview.Entries.Any(x => x.IsDamagedReservation);
             preview.Icons.Add(new Label
             {
-                Text = damaged ? "!" : "Event",
+                Text = damaged ? "!" : AppResources.EventLabel,
                 FontSize = 12,
                 FontFamily = "OpenSansSemibold",
                 TextColor = Color.FromArgb(damaged ? "#9B5948" : "#54766A"),
@@ -719,7 +745,7 @@ public partial class MainPage : ContentPage
         if (selectedEvents.Count == 0)
             MonthDetails.Add(new Label
             {
-                Text = "Nothing planned yet.",
+                Text = AppResources.NothingPlannedYet,
                 TextColor = Color.FromArgb("#718A80"),
                 FontSize = 13,
                 VerticalOptions = LayoutOptions.Center
@@ -745,37 +771,53 @@ public partial class MainPage : ContentPage
         RenderVehicles();
     }
 
+    private const string TodayAccent = "#D9922E";
+
+    private static bool IsToday(DateOnly date) => date == DateOnly.FromDateTime(DateTime.Today);
+
+    private static string DescribeDate(DateOnly date)
+    {
+        var text = date.ToString("dddd, d MMMM yyyy", CultureInfo.CurrentCulture);
+        return IsToday(date) ? $"{AppResources.Today}, {text}" : text;
+    }
+
     private void ApplyDayAppearance(DateOnly date, DayVisual visual)
     {
         var selected = date == _selectedDate;
+        var today = IsToday(date);
         visual.Button.BackgroundColor = selected
             ? Color.FromArgb("#3A796C")
+            : today ? Color.FromArgb("#FCEBCB")
             : visual.IsMonth ? Colors.Transparent : Color.FromArgb("#EFF6F2");
-        visual.Button.TextColor = selected ? Colors.White :
-            Color.FromArgb(visual.IsMonth && date.Month != _selectedDate.Month ? "#ACBDB5" : "#315E55");
+        visual.Button.TextColor = selected ? Colors.White
+            : today ? Color.FromArgb("#8A5512")
+            : Color.FromArgb(visual.IsMonth && date.Month != _selectedDate.Month ? "#ACBDB5" : "#315E55");
         if (visual.IsMonth)
         {
             visual.Border.Stroke = new SolidColorBrush(Color.FromArgb(
-                visual.HasWarning ? "#C07156" : selected ? "#A7C9B9" : "#E5EFEA"));
-            visual.Border.StrokeThickness = visual.HasWarning || selected ? 2 : 1;
+                visual.HasWarning ? "#C07156" : today ? TodayAccent : selected ? "#A7C9B9" : "#E5EFEA"));
+            visual.Border.StrokeThickness = visual.HasWarning || today || selected ? 2 : 1;
             if (visual.Count is not null)
                 visual.Count.TextColor = selected ? Colors.White : Color.FromArgb("#54766A");
         }
         else
         {
-            visual.Border.BackgroundColor = selected ? Color.FromArgb("#F7FBF8") : Colors.White;
-            visual.Border.Stroke = new SolidColorBrush(Color.FromArgb(selected ? "#A7C9B9" : "#E8F0EC"));
+            visual.Border.BackgroundColor = selected ? Color.FromArgb("#F7FBF8")
+                : today ? Color.FromArgb("#FFFAF0") : Colors.White;
+            visual.Border.Stroke = new SolidColorBrush(Color.FromArgb(
+                today ? TodayAccent : selected ? "#A7C9B9" : "#E8F0EC"));
+            visual.Border.StrokeThickness = today ? 2 : 1;
         }
     }
 
     private string DescribeEntry(CalendarEntry entry, IReadOnlyList<CalendarEntry> dayEntries)
     {
         if (entry.Reservation is { } reservation)
-            return $"{DisplayVehicle(reservation)} reserved for {DisplayPerson(reservation)}" +
-                (HasReservationConflict(dayEntries, reservation) ? ", conflict" : "");
+            return string.Format(AppResources.ReservedFor, DisplayVehicle(reservation), DisplayPerson(reservation)) +
+                (HasReservationConflict(dayEntries, reservation) ? AppResources.ConflictShort : "");
         return entry.IsDamagedReservation
-            ? $"Needs attention: {entry.Subject}"
-            : $"{(entry.IsAllDay ? "All day" : entry.Start.ToString("t", CultureInfo.CurrentCulture))}, {entry.Subject}";
+            ? string.Format(AppResources.NeedsAttention, entry.Subject)
+            : $"{(entry.IsAllDay ? AppResources.AllDay : entry.Start.ToString("t", CultureInfo.CurrentCulture))}, {entry.Subject}";
     }
 
     private static bool HasReservationConflict(IEnumerable<CalendarEntry> entries, ReservationDetails reservation) =>
@@ -790,7 +832,7 @@ public partial class MainPage : ContentPage
             var conflict = HasReservationConflict(_entries.Where(x => x.OccursOn(date)), reservation);
             var button = new Button
             {
-                Text = $"{DisplayVehicle(reservation)}  -  {DisplayPerson(reservation)}{(conflict ? "  CONFLICT" : "")}",
+                Text = $"{DisplayVehicle(reservation)}  -  {DisplayPerson(reservation)}{(conflict ? AppResources.ConflictTag : "")}",
                 AutomationId = $"booking-{reservation.VehicleName}-{reservation.PersonName}",
                 BackgroundColor = Color.FromArgb(conflict ? "#FAE3DC" : "#E8F3ED"),
                 TextColor = Color.FromArgb(conflict ? "#984D38" : "#315F53"),
@@ -801,15 +843,15 @@ public partial class MainPage : ContentPage
                 MinimumHeightRequest = 44,
                 HorizontalOptions = LayoutOptions.Fill
             };
-            SemanticProperties.SetHint(button, "Open to cancel this reservation");
+            SemanticProperties.SetHint(button, AppResources.BookingCancelHint);
             button.Clicked += async (_, _) => await RunUiAsync(() => CancelReservationAsync(entry, date));
             return button;
         }
         return new Label
         {
             Text = entry.IsDamagedReservation
-                ? $"NEEDS ATTENTION: {entry.Subject}"
-                : $"{(entry.IsAllDay ? "All day" : entry.Start.ToString("t", CultureInfo.CurrentCulture))}  {entry.Subject}",
+                ? string.Format(AppResources.NeedsAttentionUpper, entry.Subject)
+                : $"{(entry.IsAllDay ? AppResources.AllDay : entry.Start.ToString("t", CultureInfo.CurrentCulture))}  {entry.Subject}",
             TextColor = Color.FromArgb(entry.IsDamagedReservation ? "#9B5948" : "#718A80"),
             FontSize = 12,
             LineBreakMode = LineBreakMode.WordWrap,
@@ -819,33 +861,40 @@ public partial class MainPage : ContentPage
 
     private void AddDropTarget(View target, DateOnly date)
     {
+#if ANDROID
+        AddAndroidDropTarget(target, date);
+#else
         var drop = new DropGestureRecognizer { AllowDrop = true };
         drop.DragOver += (_, args) =>
         {
             args.AcceptedOperation = DataPackageOperation.Copy;
-            InstructionLabel.Text = $"Release to reserve on {date:ddd d MMM}.";
+            InstructionLabel.Text = string.Format(AppResources.ReleaseToReserve, date);
         };
         drop.Drop += async (_, args) => await RunUiAsync(async () =>
         {
-            InstructionLabel.Text = "Opening the reservation...";
             string? value = null;
             if (args.Data.Properties.TryGetValue("FamilyWheelsVehicleId", out var property))
                 value = property?.ToString();
-            if (value is null)
-            {
-                var text = await args.Data.GetTextAsync();
-                if (text?.StartsWith(DragPrefix, StringComparison.Ordinal) == true)
-                    value = text[DragPrefix.Length..];
-            }
-            if (Guid.TryParse(value, out var vehicleId))
-                await BookAsync(vehicleId, date);
-            else
-            {
-                UpdateInstruction();
-                await DisplayAlertAsync("Can't reserve", "Drag a vehicle from the vehicle list onto a day.", "OK");
-            }
+            value ??= ParseDragText(await args.Data.GetTextAsync());
+            await HandleDroppedVehicleAsync(value, date);
         });
         target.GestureRecognizers.Add(drop);
+#endif
+    }
+
+    private static string? ParseDragText(string? text) =>
+        text?.StartsWith(DragPrefix, StringComparison.Ordinal) == true ? text[DragPrefix.Length..] : null;
+
+    private async Task HandleDroppedVehicleAsync(string? value, DateOnly date)
+    {
+        InstructionLabel.Text = AppResources.OpeningReservation;
+        if (Guid.TryParse(value, out var vehicleId))
+            await BookAsync(vehicleId, date);
+        else
+        {
+            UpdateInstruction();
+            await DisplayAlertAsync(AppResources.CantReserve, AppResources.DragFromList, AppResources.OK);
+        }
     }
 
     private async Task SelectDayAsync(DateOnly date)
@@ -878,27 +927,27 @@ public partial class MainPage : ContentPage
         {
             if (!_ready)
             {
-                await DisplayAlertAsync("Sync needed", "Connect and sync the family calendar before making a reservation.", "OK");
+                await DisplayAlertAsync(AppResources.SyncNeeded, AppResources.SyncBeforeReserving, AppResources.OK);
                 return;
             }
             var vehicle = _session.Settings.Vehicles.FirstOrDefault(x => x.Id == vehicleId && x.IsActive);
             if (vehicle is null)
-                throw new InvalidOperationException("That vehicle is no longer active.");
+                throw new InvalidOperationException(AppResources.VehicleNoLongerActive);
             var people = _session.Settings.People.Where(x => x.IsActive).ToList();
             if (people.Count == 0)
             {
-                await DisplayAlertAsync("Add your family", "Add at least one family member in Settings first.", "OK");
+                await DisplayAlertAsync(AppResources.AddYourFamily, AppResources.AddFamilyFirst, AppResources.OK);
                 return;
             }
-            var choice = await DisplayActionSheetAsync($"Who needs {vehicle.Name} on {date:ddd d MMM}?",
-                "Cancel", null, people.Select(x => x.Name).ToArray());
+            var choice = await DisplayActionSheetAsync(string.Format(AppResources.WhoNeeds, vehicle.Name, date),
+                AppResources.Cancel, null, people.Select(x => x.Name).ToArray());
             var person = people.FirstOrDefault(x => x.Name == choice);
             if (person is null)
             {
                 await SelectDateAsync(date);
                 return;
             }
-            await RunWithSavingAsync($"Saving {vehicle.Name} for {person.Name} on {date:ddd d MMM}...", async () =>
+            await RunWithSavingAsync(string.Format(AppResources.SavingReservation, vehicle.Name, person.Name, date), async () =>
             {
                 try
                 {
@@ -907,25 +956,25 @@ public partial class MainPage : ContentPage
                     _selectedVehicle = null;
                     await RefreshAsync();
                     if (result.HasConflict)
-                        await DisplayAlertAsync("Reservation needs attention",
-                            "The reservation was saved, but another booking or damaged reservation exists on this day. Please resolve it in the calendar.", "OK");
+                        await DisplayAlertAsync(AppResources.ReservationNeedsAttention,
+                            AppResources.ReservationSavedWithConflict, AppResources.OK);
                     else if (result.VerificationFailed)
-                        await DisplayAlertAsync("Reservation saved",
-                            "The reservation was saved, but the follow-up check failed. Sync again to check for conflicts.", "OK");
+                        await DisplayAlertAsync(AppResources.ReservationSaved,
+                            AppResources.ReservationSavedCheckFailed, AppResources.OK);
                     else
-                        SemanticScreenReader.Announce($"{vehicle.Name} reserved for {person.Name} on {date:dddd d MMMM}.");
+                        SemanticScreenReader.Announce(string.Format(AppResources.ReservedAnnouncement, vehicle.Name, person.Name, date));
                 }
                 catch (BookingConflictException ex)
                 {
                     _selectedDate = date;
                     await RefreshAsync();
-                    await DisplayAlertAsync("Already taken", ex.Message, "OK");
+                    await DisplayAlertAsync(AppResources.AlreadyTaken, ex.Message, AppResources.OK);
                 }
                 catch (ReservationWriteUncertainException ex)
                 {
                     _selectedDate = date;
                     await RefreshAsync();
-                    await DisplayAlertAsync("Check the calendar", ex.Message, "OK");
+                    await DisplayAlertAsync(AppResources.CheckCalendar, ex.Message, AppResources.OK);
                 }
             });
         }
@@ -940,22 +989,22 @@ public partial class MainPage : ContentPage
     {
         if (!_ready || entry.Reservation is not { } reservation)
         {
-            await DisplayAlertAsync("Sync needed", "Sync the calendar before changing a reservation.", "OK");
+            await DisplayAlertAsync(AppResources.SyncNeeded, AppResources.SyncBeforeChanging, AppResources.OK);
             return;
         }
-        var confirm = await DisplayAlertAsync("Cancel this reservation?",
-            $"{DisplayVehicle(reservation)} is reserved for {DisplayPerson(reservation)} on {date:dddd d MMMM}.",
-            "Cancel reservation", "Keep it");
+        var confirm = await DisplayAlertAsync(AppResources.CancelReservationTitle,
+            string.Format(AppResources.CancelReservationMessage, DisplayVehicle(reservation), DisplayPerson(reservation), date),
+            AppResources.CancelReservation, AppResources.KeepIt);
         if (!confirm)
             return;
         _operationInProgress = true;
         try
         {
-            await RunWithSavingAsync("Removing the reservation...", async () =>
+            await RunWithSavingAsync(AppResources.RemovingReservation, async () =>
             {
                 await _planner.CancelAsync(_session.Calendar, _session.Settings, entry);
                 await RefreshAsync();
-                SemanticScreenReader.Announce("Reservation canceled.");
+                SemanticScreenReader.Announce(AppResources.ReservationCanceled);
             });
         }
         finally
@@ -1050,7 +1099,7 @@ public partial class MainPage : ContentPage
         catch (Exception ex)
         {
             Debug.WriteLine($"Family Wheels action failed: {ex}");
-            await DisplayAlertAsync("Something went wrong", ex.Message, "OK");
+            await DisplayAlertAsync(AppResources.SomethingWentWrong, ex.Message, AppResources.OK);
         }
     }
 }

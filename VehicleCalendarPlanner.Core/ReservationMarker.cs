@@ -16,8 +16,7 @@ public static partial class ReservationMarker
     {
         var data = JsonSerializer.SerializeToUtf8Bytes(reservation);
         var encoded = Convert.ToBase64String(data).TrimEnd('=').Replace('+', '-').Replace('/', '_');
-        return $"Vehicle: {reservation.VehicleName}\nReserved for: {reservation.PersonName}\n\n" +
-               "Managed by Family Wheels. Please leave the code below intact if you edit this event.\n" +
+        return string.Format(CoreResources.ReservationBody, reservation.VehicleName, reservation.PersonName) +
                $"{MarkerPrefix}{encoded}]";
     }
 

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="SampleCalendarName" xml:space="preserve">
+    <value>Sample family calendar</value>
+  </data>
+  <data name="SampleCarName" xml:space="preserve">
+    <value>Car {0}</value>
+  </data>
+  <data name="SampleCarType" xml:space="preserve">
+    <value>Car</value>
+  </data>
+  <data name="SampleElectricBikeType" xml:space="preserve">
+    <value>Electric bike</value>
+  </data>
+  <data name="SampleCalendarNotSelected" xml:space="preserve">
+    <value>The sample calendar is not selected.</value>
+  </data>
+  <data name="AuthenticationRequired" xml:space="preserve">
+    <value>Connect the shared Microsoft account in Settings first.</value>
+  </data>
+  <data name="SettingsEmpty" xml:space="preserve">
+    <value>The saved family settings are empty.</value>
+  </data>
+  <data name="SettingsIncomplete" xml:space="preserve">
+    <value>The saved family settings are incomplete.</value>
+  </data>
+  <data name="UnnamedCalendar" xml:space="preserve">
+    <value>(Unnamed calendar)</value>
+  </data>
+  <data name="NoTitle" xml:space="preserve">
+    <value>(No title)</value>
+  </data>
+  <data name="SaveInterrupted" xml:space="preserve">
+    <value>The connection was interrupted while saving. The reservation may have been created; refresh the calendar before trying again.</value>
+  </data>
+  <data name="SaveNotConfirmed" xml:space="preserve">
+    <value>Microsoft could not confirm the save. The reservation may have been created; refresh the calendar before trying again.</value>
+  </data>
+  <data name="SaveResultUnverified" xml:space="preserve">
+    <value>Microsoft accepted the request, but its result could not be verified. The reservation may have been created; refresh the calendar before trying again.</value>
+  </data>
+  <data name="SavedEventMissingDetails" xml:space="preserve">
+    <value>The saved event did not contain the expected reservation details.</value>
+  </data>
+  <data name="EventChangedInOutlook" xml:space="preserve">
+    <value>This event changed in Outlook. Refresh before removing it.</value>
+  </data>
+  <data name="GraphRepeatedPageLink" xml:space="preserve">
+    <value>Microsoft Graph returned a repeated page link.</value>
+  </data>
+  <data name="GraphIncompleteResponse" xml:space="preserve">
+    <value>Microsoft Graph returned an incomplete calendar response.</value>
+  </data>
+  <data name="GraphInvalidItem" xml:space="preserve">
+    <value>Microsoft Graph returned an invalid calendar item.</value>
+  </data>
+  <data name="GraphInvalidPageLink" xml:space="preserve">
+    <value>Microsoft Graph returned an invalid page link.</value>
+  </data>
+  <data name="GraphUnsafePageLink" xml:space="preserve">
+    <value>Microsoft Graph returned an unsafe page link.</value>
+  </data>
+  <data name="GraphInvalidEvent" xml:space="preserve">
+    <value>Microsoft Graph returned an invalid event.</value>
+  </data>
+  <data name="EventInvalidDateRange" xml:space="preserve">
+    <value>The event '{0}' has an invalid date range.</value>
+  </data>
+  <data name="EventInvalidTime" xml:space="preserve">
+    <value>Microsoft Graph returned an event without a valid {0} time.</value>
+  </data>
+  <data name="GraphFieldMissing" xml:space="preserve">
+    <value>Microsoft Graph omitted the {0} field.</value>
+  </data>
+  <data name="GraphRequestFailed" xml:space="preserve">
+    <value>Microsoft calendar request failed ({0}).</value>
+  </data>
+  <data name="VehicleUnavailable" xml:space="preserve">
+    <value>That vehicle is no longer available. Open Settings to check it.</value>
+  </data>
+  <data name="PersonInactive" xml:space="preserve">
+    <value>That family member is no longer active. Open Settings to check them.</value>
+  </data>
+  <data name="EditedReservationConflict" xml:space="preserve">
+    <value>A vehicle reservation on this day has been edited in Outlook and cannot be checked. Restore its Family Wheels code or remove that event in Outlook first.</value>
+  </data>
+  <data name="AlreadyReserved" xml:space="preserve">
+    <value>{0} is already reserved for {1} on {2:D}.</value>
+  </data>
+  <data name="ChooseCalendarFirst" xml:space="preserve">
+    <value>Choose the family calendar in Settings first.</value>
+  </data>
+  <data name="ReservationBody" xml:space="preserve">
+    <value>Vehicle: {0}
+Reserved for: {1}
+
+Managed by Family Wheels. Please leave the code below intact if you edit this event.
+</value>
+  </data>
+</root>

@@ -1,0 +1,445 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Tagline" xml:space="preserve">
+    <value>Een beetje plannen, veel meer rust.</value>
+  </data>
+  <data name="Sync" xml:space="preserve">
+    <value>Synchroniseren</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Instellingen</value>
+  </data>
+  <data name="UpdatingReservation" xml:space="preserve">
+    <value>Reservatie wordt bijgewerkt</value>
+  </data>
+  <data name="StatusInitial" xml:space="preserve">
+    <value>Stel je gezinsagenda in om te beginnen.</value>
+  </data>
+  <data name="TrySample" xml:space="preserve">
+    <value>Voorbeeld proberen</value>
+  </data>
+  <data name="ExitSample" xml:space="preserve">
+    <value>Voorbeeld sluiten</value>
+  </data>
+  <data name="PreviousPeriod" xml:space="preserve">
+    <value>Vorige week of maand</value>
+  </data>
+  <data name="NextPeriod" xml:space="preserve">
+    <value>Volgende week of maand</value>
+  </data>
+  <data name="Today" xml:space="preserve">
+    <value>Vandaag</value>
+  </data>
+  <data name="Week" xml:space="preserve">
+    <value>Week</value>
+  </data>
+  <data name="Month" xml:space="preserve">
+    <value>Maand</value>
+  </data>
+  <data name="WeekAhead" xml:space="preserve">
+    <value>DE KOMENDE WEEK</value>
+  </data>
+  <data name="MonthAtAGlance" xml:space="preserve">
+    <value>DE MAAND IN EEN OOGOPSLAG</value>
+  </data>
+  <data name="DragInstruction" xml:space="preserve">
+    <value>Houd een voertuig ingedrukt en sleep het naar een dag, of tik om te kiezen.</value>
+  </data>
+  <data name="YourRides" xml:space="preserve">
+    <value>JOUW VERVOER</value>
+  </data>
+  <data name="PickVehicle" xml:space="preserve">
+    <value>Kies een voertuig</value>
+  </data>
+  <data name="ManageVehicles" xml:space="preserve">
+    <value>+ Voertuigen beheren</value>
+  </data>
+  <data name="StatusConnect" xml:space="preserve">
+    <value>Verbind je Microsoft-agenda en voeg je gezin toe in Instellingen.</value>
+  </data>
+  <data name="ConflictSuffix" xml:space="preserve">
+    <value> {0} conflicterende of beschadigde reservatie(s) vragen aandacht.</value>
+  </data>
+  <data name="StatusSample" xml:space="preserve">
+    <value>VOORBEELDMODUS - wijzigingen worden niet opgeslagen of naar Microsoft verzonden.{0}</value>
+  </data>
+  <data name="StatusUpdated" xml:space="preserve">
+    <value>{0} - bijgewerkt om {1:t}.{2}</value>
+  </data>
+  <data name="StatusNotUpToDate" xml:space="preserve">
+    <value>Agenda niet up-to-date: {0} Reservaties zijn niet beschikbaar tot de synchronisatie lukt.</value>
+  </data>
+  <data name="CouldNotSync" xml:space="preserve">
+    <value>Synchronisatie mislukt</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="AutoSyncFailed" xml:space="preserve">
+    <value>Automatische synchronisatie mislukt: {0}</value>
+  </data>
+  <data name="TapDayFor" xml:space="preserve">
+    <value>Tik nu op een dag voor {0}, of sleep het voertuig.</value>
+  </data>
+  <data name="DragOrTap" xml:space="preserve">
+    <value>Sleep een voertuig naar een dag, of tik op een voertuig en daarna op een dag.</value>
+  </data>
+  <data name="AvailabilityFor" xml:space="preserve">
+    <value>Beschikbaarheid op {0:ddd d MMM}</value>
+  </data>
+  <data name="NoVehiclesYet" xml:space="preserve">
+    <value>Nog geen voertuigen. Voeg de voertuigen van je gezin toe in Instellingen.</value>
+  </data>
+  <data name="SyncNeeded" xml:space="preserve">
+    <value>Synchronisatie nodig</value>
+  </data>
+  <data name="WithPerson" xml:space="preserve">
+    <value>Bij {0}</value>
+  </data>
+  <data name="NeedsReview" xml:space="preserve">
+    <value>Nakijken</value>
+  </data>
+  <data name="Available" xml:space="preserve">
+    <value>Beschikbaar</value>
+  </data>
+  <data name="SelectOrDragVehicle" xml:space="preserve">
+    <value>Selecteer of sleep {0}</value>
+  </data>
+  <data name="VehicleNameHint" xml:space="preserve">
+    <value>Selecteer dit voertuig en kies dan een dag, of sleep het naar een dag</value>
+  </data>
+  <data name="SelectVehicle" xml:space="preserve">
+    <value>Selecteer {0}. {1}</value>
+  </data>
+  <data name="VehicleSelectHint" xml:space="preserve">
+    <value>Kies een dag in de agenda nadat je dit voertuig hebt geselecteerd</value>
+  </data>
+  <data name="DragVehicleOntoDay" xml:space="preserve">
+    <value>Sleep {0} naar een dag in de agenda.</value>
+  </data>
+  <data name="DayHint" xml:space="preserve">
+    <value>Selecteer deze dag of reserveer het geselecteerde voertuig</value>
+  </data>
+  <data name="NothingPlanned" xml:space="preserve">
+    <value>Niets gepland.</value>
+  </data>
+  <data name="EventLabel" xml:space="preserve">
+    <value>Afspraak</value>
+  </data>
+  <data name="NothingPlannedYet" xml:space="preserve">
+    <value>Nog niets gepland.</value>
+  </data>
+  <data name="ReservedFor" xml:space="preserve">
+    <value>{0} gereserveerd voor {1}</value>
+  </data>
+  <data name="ConflictShort" xml:space="preserve">
+    <value>, conflict</value>
+  </data>
+  <data name="NeedsAttention" xml:space="preserve">
+    <value>Vraagt aandacht: {0}</value>
+  </data>
+  <data name="NeedsAttentionUpper" xml:space="preserve">
+    <value>VRAAGT AANDACHT: {0}</value>
+  </data>
+  <data name="AllDay" xml:space="preserve">
+    <value>Hele dag</value>
+  </data>
+  <data name="ConflictTag" xml:space="preserve">
+    <value>  CONFLICT</value>
+  </data>
+  <data name="BookingCancelHint" xml:space="preserve">
+    <value>Open om deze reservatie te annuleren</value>
+  </data>
+  <data name="ReleaseToReserve" xml:space="preserve">
+    <value>Loslaten om te reserveren op {0:ddd d MMM}.</value>
+  </data>
+  <data name="OpeningReservation" xml:space="preserve">
+    <value>Reservatie wordt geopend...</value>
+  </data>
+  <data name="CantReserve" xml:space="preserve">
+    <value>Reserveren niet mogelijk</value>
+  </data>
+  <data name="DragFromList" xml:space="preserve">
+    <value>Sleep een voertuig uit de lijst naar een dag.</value>
+  </data>
+  <data name="SyncBeforeReserving" xml:space="preserve">
+    <value>Verbind en synchroniseer de gezinsagenda voordat je reserveert.</value>
+  </data>
+  <data name="VehicleNoLongerActive" xml:space="preserve">
+    <value>Dat voertuig is niet meer actief.</value>
+  </data>
+  <data name="AddYourFamily" xml:space="preserve">
+    <value>Voeg je gezin toe</value>
+  </data>
+  <data name="AddFamilyFirst" xml:space="preserve">
+    <value>Voeg eerst minstens één gezinslid toe in Instellingen.</value>
+  </data>
+  <data name="WhoNeeds" xml:space="preserve">
+    <value>Wie heeft {0} nodig op {1:ddd d MMM}?</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Annuleren</value>
+  </data>
+  <data name="SavingReservation" xml:space="preserve">
+    <value>{0} voor {1} wordt opgeslagen op {2:ddd d MMM}...</value>
+  </data>
+  <data name="ReservationNeedsAttention" xml:space="preserve">
+    <value>Reservatie vraagt aandacht</value>
+  </data>
+  <data name="ReservationSavedWithConflict" xml:space="preserve">
+    <value>De reservatie is opgeslagen, maar er staat op deze dag nog een boeking of een beschadigde reservatie. Los dit op in de agenda.</value>
+  </data>
+  <data name="ReservationSaved" xml:space="preserve">
+    <value>Reservatie opgeslagen</value>
+  </data>
+  <data name="ReservationSavedCheckFailed" xml:space="preserve">
+    <value>De reservatie is opgeslagen, maar de controle achteraf is mislukt. Synchroniseer opnieuw om op conflicten te controleren.</value>
+  </data>
+  <data name="ReservedAnnouncement" xml:space="preserve">
+    <value>{0} gereserveerd voor {1} op {2:dddd d MMMM}.</value>
+  </data>
+  <data name="AlreadyTaken" xml:space="preserve">
+    <value>Al bezet</value>
+  </data>
+  <data name="CheckCalendar" xml:space="preserve">
+    <value>Controleer de agenda</value>
+  </data>
+  <data name="SyncBeforeChanging" xml:space="preserve">
+    <value>Synchroniseer de agenda voordat je een reservatie wijzigt.</value>
+  </data>
+  <data name="CancelReservationTitle" xml:space="preserve">
+    <value>Deze reservatie annuleren?</value>
+  </data>
+  <data name="CancelReservationMessage" xml:space="preserve">
+    <value>{0} is gereserveerd voor {1} op {2:dddd d MMMM}.</value>
+  </data>
+  <data name="CancelReservation" xml:space="preserve">
+    <value>Reservatie annuleren</value>
+  </data>
+  <data name="KeepIt" xml:space="preserve">
+    <value>Behouden</value>
+  </data>
+  <data name="RemovingReservation" xml:space="preserve">
+    <value>Reservatie wordt verwijderd...</value>
+  </data>
+  <data name="ReservationCanceled" xml:space="preserve">
+    <value>Reservatie geannuleerd.</value>
+  </data>
+  <data name="SomethingWentWrong" xml:space="preserve">
+    <value>Er ging iets mis</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>&lt; Terug</value>
+  </data>
+  <data name="MakeItYours" xml:space="preserve">
+    <value>Maak het persoonlijk</value>
+  </data>
+  <data name="SettingsTagline" xml:space="preserve">
+    <value>Jouw gezin, jouw voertuigen, jouw agenda.</value>
+  </data>
+  <data name="MicrosoftFamilyCalendar" xml:space="preserve">
+    <value>Microsoft-gezinsagenda</value>
+  </data>
+  <data name="ConnectCalendar" xml:space="preserve">
+    <value>Verbinden / agenda kiezen</value>
+  </data>
+  <data name="Disconnect" xml:space="preserve">
+    <value>Verbinding verbreken</value>
+  </data>
+  <data name="SharedSignInNote" xml:space="preserve">
+    <value>Dit dashboard gebruikt één gedeelde aanmelding. Iedereen kiest zijn eigen naam bij het reserveren.</value>
+  </data>
+  <data name="FamilyMembers" xml:space="preserve">
+    <value>Gezinsleden</value>
+  </data>
+  <data name="FamilyMembersHint" xml:space="preserve">
+    <value>Voeg iedereen toe die een voertuig deelt.</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>+ Toevoegen</value>
+  </data>
+  <data name="VehiclesAndTransport" xml:space="preserve">
+    <value>Voertuigen en vervoer</value>
+  </data>
+  <data name="VehiclesHint" xml:space="preserve">
+    <value>Geef elke auto, fiets of elk ander voertuig een eigen naam.</value>
+  </data>
+  <data name="StorageNote" xml:space="preserve">
+    <value>Gezinsleden en voertuigen worden op dit toestel bewaard. Reservaties worden bewaard in de gekozen Microsoft-agenda.</value>
+  </data>
+  <data name="IconCar" xml:space="preserve">
+    <value>Auto</value>
+  </data>
+  <data name="IconBicycle" xml:space="preserve">
+    <value>Fiets</value>
+  </data>
+  <data name="IconVan" xml:space="preserve">
+    <value>Bestelwagen</value>
+  </data>
+  <data name="IconScooter" xml:space="preserve">
+    <value>Scooter</value>
+  </data>
+  <data name="IconBus" xml:space="preserve">
+    <value>Bus of vrachtwagen</value>
+  </data>
+  <data name="IconOther" xml:space="preserve">
+    <value>Andere</value>
+  </data>
+  <data name="SampleMode" xml:space="preserve">
+    <value>Voorbeeldmodus</value>
+  </data>
+  <data name="ExitSampleFirst" xml:space="preserve">
+    <value>Ga terug naar de agenda en sluit het voorbeeld voordat je je eigen agenda verbindt.</value>
+  </data>
+  <data name="NoEditableCalendars" xml:space="preserve">
+    <value>Geen bewerkbare agenda's</value>
+  </data>
+  <data name="NoEditableCalendarsMessage" xml:space="preserve">
+    <value>Microsoft gaf geen bewerkbare agenda terug voor dit account. Meld je aan als eigenaar van de agenda; sommige gedeelde of groepsagenda's zijn mogelijk niet beschikbaar via Microsoft Graph.</value>
+  </data>
+  <data name="ChooseCalendarFor" xml:space="preserve">
+    <value>Kies een agenda voor {0}</value>
+  </data>
+  <data name="ChangeCalendarTitle" xml:space="preserve">
+    <value>Agenda wijzigen?</value>
+  </data>
+  <data name="ChangeCalendarMessage" xml:space="preserve">
+    <value>Bestaande reservaties blijven in de oude agenda. Dit dashboard toont de reservaties uit de nieuw gekozen agenda.</value>
+  </data>
+  <data name="ChangeCalendar" xml:space="preserve">
+    <value>Agenda wijzigen</value>
+  </data>
+  <data name="KeepCurrent" xml:space="preserve">
+    <value>Huidige behouden</value>
+  </data>
+  <data name="DisconnectTitle" xml:space="preserve">
+    <value>Verbinding met Microsoft verbreken?</value>
+  </data>
+  <data name="DisconnectMessage" xml:space="preserve">
+    <value>Reservaties blijven in de Microsoft-agenda. Dit dashboard moet daarna opnieuw verbonden worden.</value>
+  </data>
+  <data name="KeepConnected" xml:space="preserve">
+    <value>Verbonden blijven</value>
+  </data>
+  <data name="SampleModeSettings" xml:space="preserve">
+    <value>Voorbeeldmodus: deze wijzigingen zijn tijdelijk en komen nooit in je Microsoft-agenda terecht.</value>
+  </data>
+  <data name="NotConnected" xml:space="preserve">
+    <value>Niet verbonden. Meld je één keer aan en kies daarna je bestaande gezinsagenda.</value>
+  </data>
+  <data name="SelectedCalendar" xml:space="preserve">
+    <value>Gekozen: {0}</value>
+  </data>
+  <data name="NoFamilyMembers" xml:space="preserve">
+    <value>Nog geen gezinsleden toegevoegd.</value>
+  </data>
+  <data name="FamilyMember" xml:space="preserve">
+    <value>Gezinslid</value>
+  </data>
+  <data name="Hidden" xml:space="preserve">
+    <value>Verborgen</value>
+  </data>
+  <data name="NoVehiclesAdded" xml:space="preserve">
+    <value>Nog geen voertuigen toegevoegd.</value>
+  </data>
+  <data name="TypeHidden" xml:space="preserve">
+    <value>{0} - verborgen</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Bewerken</value>
+  </data>
+  <data name="Hide" xml:space="preserve">
+    <value>Verbergen</value>
+  </data>
+  <data name="Restore" xml:space="preserve">
+    <value>Herstellen</value>
+  </data>
+  <data name="AddFamilyMember" xml:space="preserve">
+    <value>Gezinslid toevoegen</value>
+  </data>
+  <data name="EditFamilyMember" xml:space="preserve">
+    <value>Gezinslid bewerken</value>
+  </data>
+  <data name="NamePrompt" xml:space="preserve">
+    <value>Welke naam moet in de agenda verschijnen?</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Opslaan</value>
+  </data>
+  <data name="NamePlaceholder" xml:space="preserve">
+    <value>Naam</value>
+  </data>
+  <data name="EnterName" xml:space="preserve">
+    <value>Vul een naam in.</value>
+  </data>
+  <data name="NameExists" xml:space="preserve">
+    <value>Die naam bestaat al. Herstel indien nodig de verborgen persoon.</value>
+  </data>
+  <data name="AddVehicle" xml:space="preserve">
+    <value>Voertuig toevoegen</value>
+  </data>
+  <data name="EditVehicle" xml:space="preserve">
+    <value>Voertuig bewerken</value>
+  </data>
+  <data name="VehicleNamePrompt" xml:space="preserve">
+    <value>Geef dit voertuig een eigen naam, zoals Blauwe auto of E-bike 1.</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>Volgende</value>
+  </data>
+  <data name="VehicleNamePlaceholder" xml:space="preserve">
+    <value>Naam van het voertuig</value>
+  </data>
+  <data name="EnterVehicleName" xml:space="preserve">
+    <value>Vul een naam voor het voertuig in.</value>
+  </data>
+  <data name="VehicleNameExists" xml:space="preserve">
+    <value>Die voertuignaam bestaat al. Herstel indien nodig het verborgen voertuig.</value>
+  </data>
+  <data name="TransportTypeTitle" xml:space="preserve">
+    <value>Soort vervoer</value>
+  </data>
+  <data name="TransportTypePrompt" xml:space="preserve">
+    <value>Je kunt elk type gebruiken, zoals elektrische fiets of bakfiets.</value>
+  </data>
+  <data name="TransportTypePlaceholder" xml:space="preserve">
+    <value>Soort vervoer</value>
+  </data>
+  <data name="EnterTransportType" xml:space="preserve">
+    <value>Vul een soort vervoer in.</value>
+  </data>
+  <data name="ChoosePicture" xml:space="preserve">
+    <value>Kies een afbeelding voor dit voertuig</value>
+  </data>
+  <data name="HideFamilyMemberTitle" xml:space="preserve">
+    <value>Gezinslid verbergen?</value>
+  </data>
+  <data name="HideFamilyMemberMessage" xml:space="preserve">
+    <value>{0} verbergen voor nieuwe reservaties? Bestaande reservaties blijven in de agenda. Je kunt deze persoon later herstellen.</value>
+  </data>
+  <data name="Keep" xml:space="preserve">
+    <value>Behouden</value>
+  </data>
+  <data name="HideVehicleTitle" xml:space="preserve">
+    <value>Voertuig verbergen?</value>
+  </data>
+  <data name="HideVehicleMessage" xml:space="preserve">
+    <value>{0} verbergen voor nieuwe reservaties? Bestaande reservaties blijven in de agenda. Je kunt het later herstellen.</value>
+  </data>
+  <data name="CouldNotSave" xml:space="preserve">
+    <value>Opslaan mislukt</value>
+  </data>
+  <data name="AndroidSignInUnavailable" xml:space="preserve">
+    <value>Het Android-aanmeldvenster is niet beschikbaar.</value>
+  </data>
+  <data name="WindowsSignInUnavailable" xml:space="preserve">
+    <value>Het Windows-aanmeldvenster is niet beschikbaar.</value>
+  </data>
+  <data name="OpenDay" xml:space="preserve">
+    <value>Vrije dag - sleep hier een voertuig naartoe</value>
+  </data>
+</root>

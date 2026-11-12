@@ -17,9 +17,9 @@ public sealed class JsonSettingsStore(string path)
 
             await using var stream = File.OpenRead(path);
             var settings = await JsonSerializer.DeserializeAsync<PlannerSettings>(stream, Options, cancellationToken)
-                ?? throw new InvalidDataException("The saved family settings are empty.");
+                ?? throw new InvalidDataException(CoreResources.SettingsEmpty);
             if (settings.People is null || settings.Vehicles is null)
-                throw new InvalidDataException("The saved family settings are incomplete.");
+                throw new InvalidDataException(CoreResources.SettingsIncomplete);
             return settings;
         }
         finally

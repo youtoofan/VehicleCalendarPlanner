@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="SampleCalendarName" xml:space="preserve">
+    <value>Voorbeeld-gezinsagenda</value>
+  </data>
+  <data name="SampleCarName" xml:space="preserve">
+    <value>Auto {0}</value>
+  </data>
+  <data name="SampleCarType" xml:space="preserve">
+    <value>Auto</value>
+  </data>
+  <data name="SampleElectricBikeType" xml:space="preserve">
+    <value>Elektrische fiets</value>
+  </data>
+  <data name="SampleCalendarNotSelected" xml:space="preserve">
+    <value>De voorbeeldagenda is niet geselecteerd.</value>
+  </data>
+  <data name="AuthenticationRequired" xml:space="preserve">
+    <value>Verbind eerst het gedeelde Microsoft-account in Instellingen.</value>
+  </data>
+  <data name="SettingsEmpty" xml:space="preserve">
+    <value>De bewaarde gezinsinstellingen zijn leeg.</value>
+  </data>
+  <data name="SettingsIncomplete" xml:space="preserve">
+    <value>De bewaarde gezinsinstellingen zijn onvolledig.</value>
+  </data>
+  <data name="UnnamedCalendar" xml:space="preserve">
+    <value>(Agenda zonder naam)</value>
+  </data>
+  <data name="NoTitle" xml:space="preserve">
+    <value>(Geen titel)</value>
+  </data>
+  <data name="SaveInterrupted" xml:space="preserve">
+    <value>De verbinding werd onderbroken tijdens het opslaan. De reservatie is mogelijk aangemaakt; vernieuw de agenda voordat je het opnieuw probeert.</value>
+  </data>
+  <data name="SaveNotConfirmed" xml:space="preserve">
+    <value>Microsoft kon het opslaan niet bevestigen. De reservatie is mogelijk aangemaakt; vernieuw de agenda voordat je het opnieuw probeert.</value>
+  </data>
+  <data name="SaveResultUnverified" xml:space="preserve">
+    <value>Microsoft heeft de aanvraag aanvaard, maar het resultaat kon niet gecontroleerd worden. De reservatie is mogelijk aangemaakt; vernieuw de agenda voordat je het opnieuw probeert.</value>
+  </data>
+  <data name="SavedEventMissingDetails" xml:space="preserve">
+    <value>De opgeslagen afspraak bevatte niet de verwachte reservatiegegevens.</value>
+  </data>
+  <data name="EventChangedInOutlook" xml:space="preserve">
+    <value>Deze afspraak is gewijzigd in Outlook. Vernieuw voordat je ze verwijdert.</value>
+  </data>
+  <data name="GraphRepeatedPageLink" xml:space="preserve">
+    <value>Microsoft Graph gaf een herhaalde paginalink terug.</value>
+  </data>
+  <data name="GraphIncompleteResponse" xml:space="preserve">
+    <value>Microsoft Graph gaf een onvolledig agenda-antwoord terug.</value>
+  </data>
+  <data name="GraphInvalidItem" xml:space="preserve">
+    <value>Microsoft Graph gaf een ongeldig agenda-item terug.</value>
+  </data>
+  <data name="GraphInvalidPageLink" xml:space="preserve">
+    <value>Microsoft Graph gaf een ongeldige paginalink terug.</value>
+  </data>
+  <data name="GraphUnsafePageLink" xml:space="preserve">
+    <value>Microsoft Graph gaf een onveilige paginalink terug.</value>
+  </data>
+  <data name="GraphInvalidEvent" xml:space="preserve">
+    <value>Microsoft Graph gaf een ongeldige afspraak terug.</value>
+  </data>
+  <data name="EventInvalidDateRange" xml:space="preserve">
+    <value>De afspraak '{0}' heeft een ongeldige periode.</value>
+  </data>
+  <data name="EventInvalidTime" xml:space="preserve">
+    <value>Microsoft Graph gaf een afspraak terug zonder geldig tijdstip voor '{0}'.</value>
+  </data>
+  <data name="GraphFieldMissing" xml:space="preserve">
+    <value>Microsoft Graph liet het veld '{0}' weg.</value>
+  </data>
+  <data name="GraphRequestFailed" xml:space="preserve">
+    <value>Aanvraag aan de Microsoft-agenda mislukt ({0}).</value>
+  </data>
+  <data name="VehicleUnavailable" xml:space="preserve">
+    <value>Dat voertuig is niet meer beschikbaar. Open Instellingen om het te controleren.</value>
+  </data>
+  <data name="PersonInactive" xml:space="preserve">
+    <value>Dat gezinslid is niet meer actief. Open Instellingen om dit te controleren.</value>
+  </data>
+  <data name="EditedReservationConflict" xml:space="preserve">
+    <value>Een voertuigreservatie op deze dag is gewijzigd in Outlook en kan niet gecontroleerd worden. Herstel eerst de Family Wheels-code of verwijder die afspraak in Outlook.</value>
+  </data>
+  <data name="AlreadyReserved" xml:space="preserve">
+    <value>{0} is al gereserveerd voor {1} op {2:D}.</value>
+  </data>
+  <data name="ChooseCalendarFirst" xml:space="preserve">
+    <value>Kies eerst de gezinsagenda in Instellingen.</value>
+  </data>
+  <data name="ReservationBody" xml:space="preserve">
+    <value>Voertuig: {0}
+Gereserveerd voor: {1}
+
+Beheerd door Family Wheels. Laat de code hieronder ongewijzigd als je deze afspraak bewerkt.
+</value>
+  </data>
+</root>

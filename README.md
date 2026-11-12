@@ -4,15 +4,17 @@ A shared vehicle calendar for an Android tablet or Windows dashboard. Family mem
 
 ## Set up the calendar
 
-The app reuses the public Microsoft app registration from the existing To Do project: `cb8a627b-0974-40cd-8ced-aa5c8e6659c5`. In the [Microsoft Entra admin center](https://entra.microsoft.com/), check that this registration:
+The app uses the public Microsoft application (client) ID `4ebb2fae-d55b-4c44-94c0-9c14c325bb6a`. In the [Microsoft Entra admin center](https://entra.microsoft.com/), open **App registrations > All applications**, select the registration with that exact **Application (client) ID**, and check that it:
 
-1. Supports personal Microsoft accounts. Keep any existing account types and permissions needed by the To Do app.
+1. Supports personal Microsoft accounts. Under **Authentication > Supported account types**, select **Personal Microsoft accounts only**, or **Accounts in any organizational directory and personal Microsoft accounts** if organizational accounts are also needed. The corresponding manifest `signInAudience` values are `PersonalMicrosoftAccount` and `AzureADandPersonalMicrosoftAccount`. The app itself signs in personal accounts only.
 2. Has the **Microsoft Graph delegated** permission `Calendars.ReadWrite`. The account owner must consent when prompted.
 3. Under **Authentication > Mobile and desktop applications**, has these redirect URIs:
    - Windows: `http://localhost`
-   - Android: `msalcb8a627b-0974-40cd-8ced-aa5c8e6659c5://vehiclecalendar`
+   - Android (custom redirect URI): `msal4ebb2fae-d55b-4c44-94c0-9c14c325bb6a://auth`
 
-Changing the registration also affects the existing To Do app; do not remove its existing redirects or permissions. No client secret is needed. The calendar permission grants access to the signed-in account's calendars, not just the calendar selected in this app.
+Save the registration changes. If this registration is shared with another app, preserve its existing account types, redirects, and permissions. No client secret is needed. The calendar permission grants access to the signed-in account's calendars, not just the calendar selected in this app.
+
+If Microsoft reports that the application does not exist or is not enabled for consumers, verify the client ID and supported account types above; this cannot be fixed by retrying consent or changing the Android callback alone. If consent completes but the browser does not return to Android, verify the custom redirect URI and install a rebuilt APK. The sign-in request and Android callback share the redirect constants in `MicrosoftSignIn.cs`.
 
 Open **Settings > Connect / choose calendar**, sign in with a personal Microsoft account, and choose an editable calendar. Then add each family member and each individual car, bicycle, or other vehicle. The transport type and picture are configurable; vehicles and people can be hidden and restored.
 

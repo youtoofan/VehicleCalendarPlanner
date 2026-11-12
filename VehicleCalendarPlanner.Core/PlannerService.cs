@@ -19,9 +19,9 @@ public sealed class PlannerService
         {
             var calendarId = RequireCalendar(settings);
             var vehicle = settings.Vehicles.SingleOrDefault(x => x.Id == vehicleId && x.IsActive)
-                ?? throw new InvalidOperationException("That vehicle is no longer available. Open Settings to check it.");
+                ?? throw new InvalidOperationException(CoreResources.VehicleUnavailable);
             var person = settings.People.SingleOrDefault(x => x.Id == personId && x.IsActive)
-                ?? throw new InvalidOperationException("That family member is no longer active. Open Settings to check them.");
+                ?? throw new InvalidOperationException(CoreResources.PersonInactive);
 
             var entries = await calendar.GetEventsAsync(calendarId, date, date.AddDays(1), cancellationToken);
             EnsureAvailable(entries, vehicle, date);
@@ -65,7 +65,7 @@ public sealed class PlannerService
             if (current is null)
                 return;
             if (current.Reservation is null || current.Reservation.ReservationId != entry.Reservation?.ReservationId)
-                throw new InvalidOperationException("This event changed in Outlook. Refresh before removing it.");
+                throw new InvalidOperationException(CoreResources.EventChangedInOutlook);
 
             await calendar.DeleteEventAsync(calendarId, current, cancellationToken);
         }
@@ -84,15 +84,15 @@ public sealed class PlannerService
     {
         var onDay = entries.Where(x => x.OccursOn(date)).ToList();
         if (onDay.Any(x => x.IsDamagedReservation))
-            throw new BookingConflictException("A vehicle reservation on this day has been edited in Outlook and cannot be checked. Restore its Family Wheels code or remove that event in Outlook first.");
+            throw new BookingConflictException(CoreResources.EditedReservationConflict);
 
         var existing = onDay.FirstOrDefault(x => MatchesVehicle(x.Reservation, vehicle));
         if (existing?.Reservation is { } reservation)
-            throw new BookingConflictException($"{vehicle.Name} is already reserved for {reservation.PersonName} on {date:D}.");
+            throw new BookingConflictException(string.Format(CoreResources.AlreadyReserved, vehicle.Name, reservation.PersonName, date));
     }
 
     private static string RequireCalendar(PlannerSettings settings) =>
         !string.IsNullOrWhiteSpace(settings.CalendarId)
             ? settings.CalendarId
-            : throw new InvalidOperationException("Choose the family calendar in Settings first.");
+            : throw new InvalidOperationException(CoreResources.ChooseCalendarFirst);
 }

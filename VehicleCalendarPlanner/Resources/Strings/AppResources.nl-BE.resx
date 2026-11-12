@@ -16,6 +16,9 @@
   <data name="UpdatingReservation" xml:space="preserve">
     <value>Reservatie wordt bijgewerkt</value>
   </data>
+  <data name="LoadingCalendar" xml:space="preserve">
+    <value>Agenda laden...</value>
+  </data>
   <data name="StatusInitial" xml:space="preserve">
     <value>Stel je gezinsagenda in om te beginnen.</value>
   </data>

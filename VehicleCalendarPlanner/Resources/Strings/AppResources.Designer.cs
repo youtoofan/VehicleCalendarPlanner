@@ -655,6 +655,15 @@ namespace VehicleCalendarPlanner {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Loading calendar....
+        /// </summary>
+        public static string LoadingCalendar {
+            get {
+                return ResourceManager.GetString("LoadingCalendar", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Make it yours.
         /// </summary>
         public static string MakeItYours {

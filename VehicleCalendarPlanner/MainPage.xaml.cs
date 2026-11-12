@@ -13,26 +13,31 @@ public partial class MainPage : ContentPage
     private readonly PlannerSession _session;
     private readonly PlannerService _planner;
     private readonly SettingsPage _settingsPage;
-    private readonly SemaphoreSlim _refreshGate = new(1, 1);
+    private readonly CalendarViewData _calendarData = new();
     private readonly Dictionary<DateOnly, DayVisual> _dayViews = [];
     private readonly Dictionary<Guid, Border> _vehicleCards = [];
     private readonly List<MonthPreview> _monthPreviews = [];
-    private IReadOnlyList<CalendarEntry> _entries = [];
+    private IReadOnlyList<CalendarEntry> _entries => _calendarData.Entries;
     private DateOnly _selectedDate = DateOnly.FromDateTime(DateTime.Today);
     private DateOnly _lastToday = DateOnly.FromDateTime(DateTime.Today);
     private Guid? _selectedVehicle;
     private bool _monthView;
     private bool _initialized;
-    private bool _ready;
+    private bool _ready => _calendarData.IsReady;
     private bool _narrow;
     private bool _operationInProgress;
     private bool _statusWarning;
     private int _monthWeekCount;
     private int _monthPreviewSlots = 1;
     private int _timerGeneration;
+    private int _refreshGeneration;
 
-    private sealed record DayVisual(Button Button, Border Border, bool IsMonth, bool HasWarning = false, Label? Count = null);
-    private sealed record MonthPreview(IReadOnlyList<CalendarEntry> Entries, FlexLayout Icons, Label Count);
+    private sealed record DayVisual(Button Button, Border Border, bool IsMonth,
+        VerticalStackLayout? Details = null, Label? Count = null)
+    {
+        public bool HasWarning { get; set; }
+    }
+    private sealed record MonthPreview(DateOnly Date, FlexLayout Icons, Label Count);
 
     public MainPage(PlannerSession session, PlannerService planner, SettingsPage settingsPage)
     {
@@ -60,6 +65,9 @@ public partial class MainPage : ContentPage
     protected override void OnDisappearing()
     {
         _timerGeneration++;
+        _refreshGeneration++;
+        _calendarData.Cancel();
+        UpdateLoadingIndicator();
         base.OnDisappearing();
     }
 
@@ -133,7 +141,7 @@ public partial class MainPage : ContentPage
                 await _session.LeaveDemoAsync();
             else
                 _session.StartDemo();
-            _entries = [];
+            _calendarData.Clear();
             _selectedVehicle = null;
             _selectedDate = DateOnly.FromDateTime(DateTime.Today);
             await RefreshAsync();
@@ -168,55 +176,60 @@ public partial class MainPage : ContentPage
 
     private async Task RefreshAsync(bool showError = false)
     {
-        await _refreshGate.WaitAsync();
-        try
+        var generation = ++_refreshGeneration;
+        var today = DateOnly.FromDateTime(DateTime.Today);
+        if (today != _lastToday && _selectedDate == _lastToday)
+            _selectedDate = today;
+        _lastToday = today;
+
+        var calendar = _session.Calendar;
+        var calendarId = _session.Settings.CalendarId;
+        SampleButton.Text = _session.IsDemo ? AppResources.ExitSample : AppResources.TrySample;
+        SampleButton.IsVisible = _session.IsDemo || string.IsNullOrWhiteSpace(calendarId);
+        if (string.IsNullOrWhiteSpace(calendarId))
         {
-            var today = DateOnly.FromDateTime(DateTime.Today);
-            if (today != _lastToday && _selectedDate == _lastToday)
-                _selectedDate = today;
-            _lastToday = today;
-
-            var calendar = _session.Calendar;
-            var calendarId = _session.Settings.CalendarId;
-            SampleButton.Text = _session.IsDemo ? AppResources.ExitSample : AppResources.TrySample;
-            SampleButton.IsVisible = _session.IsDemo || string.IsNullOrWhiteSpace(calendarId);
-            if (string.IsNullOrWhiteSpace(calendarId))
-            {
-                _entries = [];
-                _ready = false;
-                SetStatus(AppResources.StatusConnect, false);
-                Render();
-                return;
-            }
-
-            var (start, end) = VisibleRange();
-            try
-            {
-                var entries = await calendar.GetEventsAsync(calendarId, start, end);
-                if (!ReferenceEquals(calendar, _session.Calendar) || calendarId != _session.Settings.CalendarId)
-                    return;
-                _entries = entries;
-                _ready = true;
-                var conflicts = CountConflicts(entries);
-                var suffix = conflicts > 0 ? string.Format(AppResources.ConflictSuffix, conflicts) : "";
-                SetStatus(_session.IsDemo
-                    ? string.Format(AppResources.StatusSample, suffix)
-                    : string.Format(AppResources.StatusUpdated, _session.Settings.CalendarName, DateTime.Now, suffix), conflicts > 0);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Calendar refresh failed: {ex}");
-                _ready = false;
-                SetStatus(string.Format(AppResources.StatusNotUpToDate, ex.Message), true);
-                if (showError)
-                    await DisplayAlertAsync(AppResources.CouldNotSync, ex.Message, AppResources.OK);
-            }
+            _calendarData.Clear();
+            UpdateLoadingIndicator();
+            SetStatus(AppResources.StatusConnect, false);
             Render();
+            return;
         }
-        finally
+
+        var (start, end) = VisibleRange();
+        var load = _calendarData.LoadAsync(calendar, calendarId, start, end);
+        SetStatus(AppResources.LoadingCalendar, false);
+        UpdateLoadingIndicator();
+        Render();
+        if (!await load || generation != _refreshGeneration)
+            return;
+        if (!ReferenceEquals(calendar, _session.Calendar) || calendarId != _session.Settings.CalendarId)
         {
-            _refreshGate.Release();
+            _calendarData.Clear();
+            UpdateLoadingIndicator();
+            return;
         }
+        UpdateLoadingIndicator();
+        if (_calendarData.Error is { } error)
+        {
+            Debug.WriteLine($"Calendar refresh failed: {error}");
+            SetStatus(string.Format(AppResources.StatusNotUpToDate, error.Message), true);
+            UpdateCalendarData();
+            if (showError)
+                await DisplayAlertAsync(AppResources.CouldNotSync, error.Message, AppResources.OK);
+            return;
+        }
+        var conflicts = CountConflicts(_entries);
+        var suffix = conflicts > 0 ? string.Format(AppResources.ConflictSuffix, conflicts) : "";
+        SetStatus(_session.IsDemo
+            ? string.Format(AppResources.StatusSample, suffix)
+            : string.Format(AppResources.StatusUpdated, _session.Settings.CalendarName, DateTime.Now, suffix), conflicts > 0);
+        UpdateCalendarData();
+    }
+
+    private void UpdateLoadingIndicator()
+    {
+        LoadingIndicator.IsVisible = _calendarData.IsLoading;
+        LoadingIndicator.IsRunning = _calendarData.IsLoading;
     }
 
     private void StartRefreshTimer()
@@ -226,7 +239,7 @@ public partial class MainPage : ContentPage
         {
             if (generation != _timerGeneration)
                 return false;
-            if (!_operationInProgress)
+            if (!_operationInProgress && !_calendarData.IsLoading)
                 _ = RefreshFromTimerAsync();
             return true;
         });
@@ -241,7 +254,8 @@ public partial class MainPage : ContentPage
         catch (Exception ex)
         {
             Debug.WriteLine($"Automatic refresh failed: {ex}");
-            _ready = false;
+            _calendarData.Cancel();
+            UpdateLoadingIndicator();
             SetStatus(string.Format(AppResources.AutoSyncFailed, ex.Message), true);
         }
     }
@@ -309,7 +323,8 @@ public partial class MainPage : ContentPage
         foreach (var vehicle in vehicles)
         {
             var booked = _entries.FirstOrDefault(x => x.OccursOn(_selectedDate) && PlannerService.MatchesVehicle(x.Reservation, vehicle));
-            var status = !_ready ? AppResources.SyncNeeded : booked?.Reservation is { } reservation
+            var status = _calendarData.IsLoading ? AppResources.LoadingCalendar
+                : !_ready ? AppResources.SyncNeeded : booked?.Reservation is { } reservation
                 ? string.Format(AppResources.WithPerson, DisplayPerson(reservation))
                 : damagedReservation ? AppResources.NeedsReview : AppResources.Available;
             var icon = new Image
@@ -438,7 +453,6 @@ public partial class MainPage : ContentPage
 
     private Border CreateDayCard(DateOnly date)
     {
-        var dayEvents = EventsOn(date);
         var dateButton = new Button
         {
             Text = $"{date:ddd}\n{date.Day}",
@@ -457,29 +471,7 @@ public partial class MainPage : ContentPage
         SemanticProperties.SetHint(dateButton, AppResources.DayHint);
         dateButton.Clicked += async (_, _) => await RunUiAsync(() => SelectDayAsync(date));
         var details = new VerticalStackLayout { Spacing = 4, VerticalOptions = LayoutOptions.Center };
-        if (IsToday(date))
-            details.Add(new Border
-            {
-                BackgroundColor = Color.FromArgb(TodayAccent),
-                StrokeThickness = 0,
-                StrokeShape = new RoundRectangle { CornerRadius = 8 },
-                Padding = new Thickness(8, 2),
-                HorizontalOptions = LayoutOptions.Start,
-                InputTransparent = true,
-                Content = new Label
-                {
-                    Text = AppResources.Today.ToUpper(CultureInfo.CurrentCulture),
-                    TextColor = Colors.White,
-                    FontFamily = "OpenSansSemibold",
-                    FontSize = 10
-                }
-            });
-        if (dayEvents.Count == 0)
-            details.Add(new Label { Text = AppResources.OpenDay, TextColor = Color.FromArgb("#A1B3AC"), FontSize = 12 });
-        else
-            foreach (var entry in dayEvents)
-                details.Add(CreateEventView(entry, date));
-
+        RenderDayDetails(date, details);
         var grid = new Grid
         {
             ColumnDefinitions = new ColumnDefinitionCollection { new(new GridLength(60)), new(GridLength.Star) },
@@ -498,10 +490,41 @@ public partial class MainPage : ContentPage
             Content = grid
         };
         AddDropTarget(border, date);
-        var visual = new DayVisual(dateButton, border, false);
+        var visual = new DayVisual(dateButton, border, false, Details: details);
         _dayViews[date] = visual;
         ApplyDayAppearance(date, visual);
         return border;
+    }
+
+    private string EmptyDayText(string readyText) =>
+        _calendarData.IsLoading ? AppResources.LoadingCalendar : _ready ? readyText : AppResources.SyncNeeded;
+
+    private void RenderDayDetails(DateOnly date, VerticalStackLayout details)
+    {
+        details.Clear();
+        var dayEvents = EventsOn(date);
+        if (IsToday(date))
+            details.Add(new Border
+            {
+                BackgroundColor = Color.FromArgb(TodayAccent),
+                StrokeThickness = 0,
+                StrokeShape = new RoundRectangle { CornerRadius = 8 },
+                Padding = new Thickness(8, 2),
+                HorizontalOptions = LayoutOptions.Start,
+                InputTransparent = true,
+                Content = new Label
+                {
+                    Text = AppResources.Today.ToUpper(CultureInfo.CurrentCulture),
+                    TextColor = Colors.White,
+                    FontFamily = "OpenSansSemibold",
+                    FontSize = 10
+                }
+            });
+        if (dayEvents.Count == 0)
+            details.Add(new Label { Text = EmptyDayText(AppResources.OpenDay), TextColor = Color.FromArgb("#A1B3AC"), FontSize = 12 });
+        else
+            foreach (var entry in dayEvents)
+                details.Add(CreateEventView(entry, date));
     }
 
     private void RenderMonth(DateOnly start, DateOnly end)
@@ -551,7 +574,7 @@ public partial class MainPage : ContentPage
             var summaries = events.Select(entry => DescribeEntry(entry, events)).ToArray();
             SemanticProperties.SetDescription(button,
                 $"{DescribeDate(date)}. " +
-                (summaries.Length == 0 ? AppResources.NothingPlanned : string.Join("; ", summaries)));
+                (summaries.Length == 0 ? EmptyDayText(AppResources.NothingPlanned) : string.Join("; ", summaries)));
             SemanticProperties.SetHint(button, AppResources.DayHint);
             button.Clicked += async (_, _) => await RunUiAsync(() => SelectDayAsync(date));
             var icons = new FlexLayout
@@ -597,10 +620,10 @@ public partial class MainPage : ContentPage
             };
             var warning = events.Any(x => x.IsDamagedReservation ||
                 x.Reservation is { } reservation && HasReservationConflict(events, reservation));
-            var visual = new DayVisual(button, cell, true, warning, count);
+            var visual = new DayVisual(button, cell, true, Count: count) { HasWarning = warning };
             _dayViews[date] = visual;
             ApplyDayAppearance(date, visual);
-            var preview = new MonthPreview(events, icons, count);
+            var preview = new MonthPreview(date, icons, count);
             _monthPreviews.Add(preview);
             RenderMonthPreview(preview);
             AddDropTarget(cell, date);
@@ -642,16 +665,17 @@ public partial class MainPage : ContentPage
     private void RenderMonthPreview(MonthPreview preview)
     {
         preview.Icons.Clear();
-        var reservations = preview.Entries.Where(x => x.Reservation is not null).ToList();
+        var entries = EventsOn(preview.Date);
+        var reservations = entries.Where(x => x.Reservation is not null).ToList();
         var shown = Math.Min(reservations.Count, _monthPreviewSlots);
         for (var index = 0; index < shown; index++)
         {
             var reservation = reservations[index].Reservation!;
-            preview.Icons.Add(CreateReservationBadge(reservation, HasReservationConflict(preview.Entries, reservation)));
+            preview.Icons.Add(CreateReservationBadge(reservation, HasReservationConflict(entries, reservation)));
         }
-        if (shown == 0 && preview.Entries.Count > 0)
+        if (shown == 0 && entries.Count > 0)
         {
-            var damaged = preview.Entries.Any(x => x.IsDamagedReservation);
+            var damaged = entries.Any(x => x.IsDamagedReservation);
             preview.Icons.Add(new Label
             {
                 Text = damaged ? "!" : AppResources.EventLabel,
@@ -662,8 +686,32 @@ public partial class MainPage : ContentPage
             });
             shown = 1;
         }
-        var remaining = preview.Entries.Count - shown;
+        var remaining = entries.Count - shown;
         preview.Count.Text = remaining > 0 ? $"+{remaining}" : "";
+    }
+
+    private void UpdateCalendarData()
+    {
+        foreach (var (date, visual) in _dayViews)
+        {
+            if (visual.Details is { } details)
+                RenderDayDetails(date, details);
+            if (visual.IsMonth)
+            {
+                var events = EventsOn(date);
+                visual.HasWarning = events.Any(x => x.IsDamagedReservation ||
+                    x.Reservation is { } reservation && HasReservationConflict(events, reservation));
+                var summaries = events.Select(entry => DescribeEntry(entry, events)).ToArray();
+                SemanticProperties.SetDescription(visual.Button, $"{DescribeDate(date)}. " +
+                    (summaries.Length == 0 ? EmptyDayText(AppResources.NothingPlanned) : string.Join("; ", summaries)));
+            }
+            ApplyDayAppearance(date, visual);
+        }
+        foreach (var preview in _monthPreviews)
+            RenderMonthPreview(preview);
+        if (_monthView)
+            RenderMonthDetails();
+        RenderVehicles();
     }
 
     private View CreateReservationBadge(ReservationDetails reservation, bool conflict)
@@ -745,7 +793,7 @@ public partial class MainPage : ContentPage
         if (selectedEvents.Count == 0)
             MonthDetails.Add(new Label
             {
-                Text = AppResources.NothingPlannedYet,
+                Text = EmptyDayText(AppResources.NothingPlannedYet),
                 TextColor = Color.FromArgb("#718A80"),
                 FontSize = 13,
                 VerticalOptions = LayoutOptions.Center

@@ -46,13 +46,16 @@
 
         <Border Grid.Row="1" x:Name="StatusCard" BackgroundColor="#E4F1EC" StrokeThickness="0"
                 StrokeShape="RoundRectangle 12" Padding="12,7">
-            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="8">
-                <ActivityIndicator x:Name="SavingIndicator" IsVisible="False" IsRunning="False"
+            <Grid ColumnDefinitions="Auto,Auto,*,Auto" ColumnSpacing="8">
+                <ActivityIndicator x:Name="LoadingIndicator" IsVisible="False" IsRunning="False"
+                                   WidthRequest="18" HeightRequest="18" Color="#3A796C"
+                                   SemanticProperties.Description="{x:Static local:AppResources.LoadingCalendar}" />
+                <ActivityIndicator x:Name="SavingIndicator" Grid.Column="1" IsVisible="False" IsRunning="False"
                                    WidthRequest="18" HeightRequest="18" Color="#3A796C"
                                    SemanticProperties.Description="{x:Static local:AppResources.UpdatingReservation}" />
-                <Label x:Name="StatusLabel" Grid.Column="1" Text="{x:Static local:AppResources.StatusInitial}"
+                <Label x:Name="StatusLabel" Grid.Column="2" Text="{x:Static local:AppResources.StatusInitial}"
                        TextColor="#315E55" FontSize="12" VerticalOptions="Center" LineBreakMode="WordWrap" />
-                <Button x:Name="SampleButton" Grid.Column="2" Text="{x:Static local:AppResources.TrySample}"
+                <Button x:Name="SampleButton" Grid.Column="3" Text="{x:Static local:AppResources.TrySample}"
                         Style="{StaticResource LightButton}" Clicked="OnSampleClicked" />
             </Grid>
         </Border>

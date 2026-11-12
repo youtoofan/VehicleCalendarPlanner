@@ -1,12 +1,13 @@
-<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>net11.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
-  <ItemGroup>
-    <EmbeddedResource Update="Resources\CoreResources.resx" StronglyTypedLanguage="CSharp"
-                      StronglyTypedNamespace="VehicleCalendarPlanner.Core" StronglyTypedClassName="CoreResources" StronglyTypedManifestPrefix="VehicleCalendarPlanner.Core.Resources"
-                      StronglyTypedFileName="$(IntermediateOutputPath)CoreResources.Designer.cs" />
-  </ItemGroup>
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net11.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<Features>runtime-async=on</Features>
+	</PropertyGroup>
+	<ItemGroup>
+		<EmbeddedResource Update="Resources\CoreResources.resx" StronglyTypedLanguage="CSharp"
+						  StronglyTypedNamespace="VehicleCalendarPlanner.Core" StronglyTypedClassName="CoreResources" StronglyTypedManifestPrefix="VehicleCalendarPlanner.Core.Resources"
+						  StronglyTypedFileName="$(IntermediateOutputPath)CoreResources.Designer.cs" />
+	</ItemGroup>
 </Project>

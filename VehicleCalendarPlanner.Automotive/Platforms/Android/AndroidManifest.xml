@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+	<!-- Only installable on Android Automotive OS head units that can render Car App Library templates. -->
+	<uses-feature android:name="android.hardware.type.automotive" android:required="true" />
+	<uses-feature android:name="android.software.car.templates_host" android:required="true" />
+	<!-- Hardware that cars may not have. Google Play requires car apps to leave both screen orientations optional;
+	     the planner activity itself is locked to landscape (see MainActivity). -->
+	<uses-feature android:name="android.hardware.wifi" android:required="false" />
+	<uses-feature android:name="android.hardware.screen.portrait" android:required="false" />
+	<uses-feature android:name="android.hardware.screen.landscape" android:required="false" />
+	<uses-feature android:name="android.hardware.camera" android:required="false" />
+	<uses-feature android:name="android.hardware.touchscreen" android:required="false" />
+
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.INTERNET" />
+
+	<application android:allowBackup="false" android:icon="@mipmap/appicon" android:roundIcon="@mipmap/appicon_round" android:supportsRtl="true">
+		<meta-data android:name="androidx.car.app.minCarApiLevel" android:value="1" />
+
+		<!-- Driving-safe agenda rendered by the system from Car App Library templates (see AgendaCarAppService). -->
+		<activity android:name="androidx.car.app.activity.CarAppActivity"
+		          android:exported="true"
+		          android:label="Family Wheels"
+		          android:launchMode="singleTask"
+		          android:theme="@android:style/Theme.DeviceDefault.NoActionBar">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+			<meta-data android:name="distractionOptimized" android:value="true" />
+		</activity>
+	</application>
+</manifest>

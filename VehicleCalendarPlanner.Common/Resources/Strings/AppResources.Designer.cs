@@ -1382,5 +1382,104 @@ namespace VehicleCalendarPlanner {
                 return ResourceManager.GetString("YourRides", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to On your phone, go to {0} and enter this code:.
+        /// </summary>
+        public static string DeviceCodeInstruction {
+            get {
+                return ResourceManager.GetString("DeviceCodeInstruction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Code expired.
+        /// </summary>
+        public static string SignInCodeExpiredTitle {
+            get {
+                return ResourceManager.GetString("SignInCodeExpiredTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The sign-in code expired. Tap Connect calendar to get a new one..
+        /// </summary>
+        public static string SignInCodeExpiredMessage {
+            get {
+                return ResourceManager.GetString("SignInCodeExpiredMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Family Wheels.
+        /// </summary>
+        public static string CarAgendaTitle {
+            get {
+                return ResourceManager.GetString("CarAgendaTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading reservations….
+        /// </summary>
+        public static string CarLoading {
+            get {
+                return ResourceManager.GetString("CarLoading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Refresh.
+        /// </summary>
+        public static string CarRefresh {
+            get {
+                return ResourceManager.GetString("CarRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No reservations in the coming days..
+        /// </summary>
+        public static string CarNoReservations {
+            get {
+                return ResourceManager.GetString("CarNoReservations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open Family Wheels while parked to sign in and choose a calendar..
+        /// </summary>
+        public static string CarSetupRequired {
+            get {
+                return ResourceManager.GetString("CarSetupRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Couldn&apos;t load reservations. Check the connection and try again..
+        /// </summary>
+        public static string CarLoadFailed {
+            get {
+                return ResourceManager.GetString("CarLoadFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} – {1}.
+        /// </summary>
+        public static string CarReservationTitle {
+            get {
+                return ResourceManager.GetString("CarReservationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} (sample).
+        /// </summary>
+        public static string CarSampleSuffix {
+            get {
+                return ResourceManager.GetString("CarSampleSuffix", resourceCulture);
+            }
+        }
     }
 }

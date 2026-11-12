@@ -14,6 +14,7 @@ public partial class SettingsPage : ContentPage
         [AppResources.IconCar, AppResources.IconBicycle, AppResources.IconVan, AppResources.IconScooter, AppResources.IconBus, AppResources.IconOther];
     private readonly PlannerSession _session;
     private readonly MicrosoftSignIn _signIn;
+    private CancellationTokenSource? _signInCancellation;
 
     public SettingsPage(PlannerSession session, MicrosoftSignIn signIn)
     {
@@ -40,9 +41,12 @@ public partial class SettingsPage : ContentPage
                 return;
             }
             ConnectButton.IsEnabled = false;
+            using var signInCancellation = new CancellationTokenSource();
+            _signInCancellation = signInCancellation;
             try
             {
-                var account = await _signIn.SignInAsync();
+                var account = await _signIn.SignInAsync(ShowDeviceCodeAsync, signInCancellation.Token);
+                HideDeviceCode();
                 var calendars = await _session.Calendar.GetCalendarsAsync();
                 var writable = calendars.Where(x => x.CanEdit).ToList();
                 if (writable.Count == 0)
@@ -76,11 +80,41 @@ public partial class SettingsPage : ContentPage
             {
                 // The user closed the Microsoft sign-in window.
             }
+            catch (OperationCanceledException) when (signInCancellation.IsCancellationRequested)
+            {
+                // The user cancelled the device code sign-in.
+            }
+            catch (MsalServiceException ex) when (ex.ErrorCode == "code_expired")
+            {
+                await DisplayAlertAsync(AppResources.SignInCodeExpiredTitle, AppResources.SignInCodeExpiredMessage, AppResources.OK);
+            }
             finally
             {
+                _signInCancellation = null;
+                HideDeviceCode();
                 ConnectButton.IsEnabled = true;
             }
         });
+
+    private void OnCancelSignInClicked(object? sender, EventArgs e) => _signInCancellation?.Cancel();
+
+    private Task ShowDeviceCodeAsync(DeviceCodePrompt prompt)
+    {
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+            DeviceCodeInstructionLabel.Text = string.Format(AppResources.DeviceCodeInstruction, prompt.VerificationUrl);
+            DeviceCodeLabel.Text = prompt.UserCode;
+            DeviceCodePanel.IsVisible = true;
+            CancelSignInButton.IsVisible = true;
+        });
+        return Task.CompletedTask;
+    }
+
+    private void HideDeviceCode()
+    {
+        DeviceCodePanel.IsVisible = false;
+        CancelSignInButton.IsVisible = false;
+    }
 
     private async void OnDisconnectClicked(object? sender, EventArgs e) =>
         await RunUiAsync(async () =>

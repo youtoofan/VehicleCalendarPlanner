@@ -30,3 +30,25 @@ dotnet build .\VehicleCalendarPlanner\VehicleCalendarPlanner.csproj -f net11.0-a
 Use `win-x64` instead of `win-arm64` on an x64 Windows machine. The Android command creates a development-signed, standalone APK at `VehicleCalendarPlanner\bin\Debug\net11.0-android\com.companyname.vehiclecalendarplanner-Signed.apk`. It is for device testing, not production distribution; a release requires your own signing key.
 
 Windows sample interactions and the core booking/Graph tests have been exercised. Real Microsoft sign-in and sync, and Android device behavior, must still be verified with the account and a physical device.
+
+## Projects
+
+- `VehicleCalendarPlanner.Core` – booking rules, Microsoft Graph calendar access and settings storage (no UI).
+- `VehicleCalendarPlanner.Common` – the shared MAUI app: pages, sign-in, styles, strings, images and fonts.
+- `VehicleCalendarPlanner` – Android tablet/phone and Windows app.
+- `VehicleCalendarPlanner.Automotive` – Android Automotive OS app (for example Volvo with Google built-in).
+
+## Android Automotive
+
+The automotive app has two launcher entries:
+
+- **Family Wheels** – a read-only list of reservations for the coming week, built with the Car App Library so it can be used while driving.
+- **Family Wheels Planner** – the full planner, locked to landscape. Android Automotive only allows it while parked. On portrait screens the system letterboxes it.
+
+The car has no usable browser for Microsoft sign-in, so the automotive app uses a device code instead. Open **Family Wheels Planner > Settings > Connect / choose calendar** while parked, then open the shown address on your phone and enter the code. The app registration must allow public client flows (Azure portal: **App registrations > Authentication > Allow public client flows**).
+
+```powershell
+dotnet build .\VehicleCalendarPlanner.Automotive\VehicleCalendarPlanner.Automotive.csproj -c Debug -p:AndroidEnableFastDeployment=false
+```
+
+Test it with an Android Automotive emulator: in Android Studio's SDK Manager, install an *Automotive* system image (or Volvo's/Polestar's emulator add-on), create an automotive AVD, and install the APK with `adb install`. Production cars do not allow sideloading. Getting the app into a real car requires Google Play, and Play only accepts certain car app categories. The car agenda declares the IoT category because Play has no calendar category, so review is likely to reject it.

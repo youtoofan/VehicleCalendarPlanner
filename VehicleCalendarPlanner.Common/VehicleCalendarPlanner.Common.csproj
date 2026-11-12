@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net11.0-android</TargetFrameworks>
+		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net11.0-windows10.0.19041.0</TargetFrameworks>
+		<!-- Keep the original namespace so XAML, resources and AppResources stay unchanged for both app heads. -->
+		<RootNamespace>VehicleCalendarPlanner</RootNamespace>
+		<UseMaui>true</UseMaui>
+		<SingleProject>true</SingleProject>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">24.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
+		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
+		<Features>runtime-async=on</Features>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<MauiImage Include="Resources\Images\*" />
+		<MauiImage Update="Resources\Images\dotnet_bot.png" BaseSize="222,185" />
+		<MauiFont Include="Resources\Fonts\*" />
+
+		<!-- App icon and splash sources; the app heads turn them into MauiIcon/MauiSplashScreen. -->
+		<None Include="Resources\Branding\*" />
+
+		<EmbeddedResource Update="Resources\Strings\AppResources.resx" Generator="PublicResXFileCodeGenerator"
+		                  CustomToolNamespace="VehicleCalendarPlanner" LastGenOutput="AppResources.Designer.cs" />
+		<Compile Update="Resources\Strings\AppResources.Designer.cs" DesignTime="True" AutoGen="True" DependentUpon="AppResources.resx" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Maui.Controls" Version="11.0.10" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="11.0.0" />
+		<PackageReference Include="Microsoft.Identity.Client" Version="4.92.0" />
+		<ProjectReference Include="..\VehicleCalendarPlanner.Core\VehicleCalendarPlanner.Core.csproj" />
+	</ItemGroup>
+
+</Project>

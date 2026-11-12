@@ -36,9 +36,20 @@
                         <Label Text="{x:Static local:AppResources.MicrosoftFamilyCalendar}" FontSize="18" FontFamily="OpenSansSemibold"
                                TextColor="#183D39" SemanticProperties.HeadingLevel="Level2" />
                         <Label x:Name="ConnectionLabel" TextColor="#668078" FontSize="13" LineBreakMode="WordWrap" />
+                        <Border x:Name="DeviceCodePanel" IsVisible="False" BackgroundColor="#EEF6F3" Stroke="#B9D6CD"
+                                StrokeShape="RoundRectangle 12" Padding="14">
+                            <VerticalStackLayout Spacing="6">
+                                <Label x:Name="DeviceCodeInstructionLabel" TextColor="#183D39" FontSize="14" LineBreakMode="WordWrap" />
+                                <Label x:Name="DeviceCodeLabel" TextColor="#183D39" FontSize="30" FontFamily="OpenSansSemibold"
+                                       CharacterSpacing="4" SemanticProperties.HeadingLevel="Level3" />
+                            </VerticalStackLayout>
+                        </Border>
                         <FlexLayout Direction="Row" Wrap="Wrap">
                             <Button x:Name="ConnectButton" Text="{x:Static local:AppResources.ConnectCalendar}"
                                     Style="{StaticResource SettingsButton}" Clicked="OnConnectClicked"
+                                    Margin="0,0,8,6" />
+                            <Button x:Name="CancelSignInButton" Text="{x:Static local:AppResources.Cancel}" IsVisible="False"
+                                    Style="{StaticResource SecondaryButton}" Clicked="OnCancelSignInClicked"
                                     Margin="0,0,8,6" />
                             <Button x:Name="DisconnectButton" Text="{x:Static local:AppResources.Disconnect}"
                                     Style="{StaticResource SecondaryButton}" Clicked="OnDisconnectClicked"

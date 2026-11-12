@@ -5,444 +5,477 @@
   <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
   <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
   <data name="Tagline" xml:space="preserve">
-    <value>A little planning, a lot more peace.</value>
+    <value>Een beetje plannen, veel meer rust.</value>
   </data>
   <data name="Sync" xml:space="preserve">
-    <value>Sync</value>
+    <value>Synchroniseren</value>
   </data>
   <data name="Settings" xml:space="preserve">
-    <value>Settings</value>
+    <value>Instellingen</value>
   </data>
   <data name="UpdatingReservation" xml:space="preserve">
-    <value>Updating reservation</value>
+    <value>Reservatie wordt bijgewerkt</value>
   </data>
   <data name="LoadingCalendar" xml:space="preserve">
-    <value>Loading calendar...</value>
+    <value>Agenda laden...</value>
   </data>
   <data name="StatusInitial" xml:space="preserve">
-    <value>Set up your family calendar to get started.</value>
+    <value>Stel je gezinsagenda in om te beginnen.</value>
   </data>
   <data name="TrySample" xml:space="preserve">
-    <value>Try sample</value>
+    <value>Voorbeeld proberen</value>
   </data>
   <data name="ExitSample" xml:space="preserve">
-    <value>Exit sample</value>
+    <value>Voorbeeld sluiten</value>
   </data>
   <data name="PreviousPeriod" xml:space="preserve">
-    <value>Previous week or month</value>
+    <value>Vorige week of maand</value>
   </data>
   <data name="NextPeriod" xml:space="preserve">
-    <value>Next week or month</value>
+    <value>Volgende week of maand</value>
   </data>
   <data name="Today" xml:space="preserve">
-    <value>Today</value>
+    <value>Vandaag</value>
   </data>
   <data name="Week" xml:space="preserve">
     <value>Week</value>
   </data>
   <data name="Month" xml:space="preserve">
-    <value>Month</value>
+    <value>Maand</value>
   </data>
   <data name="WeekAhead" xml:space="preserve">
-    <value>THE WEEK AHEAD</value>
+    <value>DE KOMENDE WEEK</value>
   </data>
   <data name="MonthAtAGlance" xml:space="preserve">
-    <value>THE MONTH AT A GLANCE</value>
+    <value>DE MAAND IN EEN OOGOPSLAG</value>
   </data>
   <data name="DragInstruction" xml:space="preserve">
-    <value>Press and hold a vehicle, then drag it onto a day, or tap to choose.</value>
+    <value>Houd een voertuig ingedrukt en sleep het naar een dag, of tik om te kiezen.</value>
   </data>
   <data name="YourRides" xml:space="preserve">
-    <value>YOUR RIDES</value>
+    <value>JOUW VERVOER</value>
   </data>
   <data name="PickVehicle" xml:space="preserve">
-    <value>Pick a vehicle</value>
+    <value>Kies een voertuig</value>
   </data>
   <data name="ManageVehicles" xml:space="preserve">
-    <value>+ Manage vehicles</value>
+    <value>+ Voertuigen beheren</value>
   </data>
   <data name="StatusConnect" xml:space="preserve">
-    <value>Connect your Microsoft calendar and add your family in Settings.</value>
+    <value>Verbind je Microsoft-agenda en voeg je gezin toe in Instellingen.</value>
   </data>
   <data name="ConflictSuffix" xml:space="preserve">
-    <value> {0} conflicting or damaged reservation(s) need attention.</value>
+    <value> {0} conflicterende of beschadigde reservatie(s) vragen aandacht.</value>
   </data>
   <data name="StatusSample" xml:space="preserve">
-    <value>SAMPLE MODE - changes are not saved or sent to Microsoft.{0}</value>
+    <value>VOORBEELDMODUS - wijzigingen worden niet opgeslagen of naar Microsoft verzonden.{0}</value>
   </data>
   <data name="StatusUpdated" xml:space="preserve">
-    <value>{0} - updated {1:t}.{2}</value>
+    <value>{0} - bijgewerkt om {1:t}.{2}</value>
   </data>
   <data name="StatusNotUpToDate" xml:space="preserve">
-    <value>Calendar not up to date: {0} Reservations are unavailable until sync succeeds.</value>
+    <value>Agenda niet up-to-date: {0} Reservaties zijn niet beschikbaar tot de synchronisatie lukt.</value>
   </data>
   <data name="CouldNotSync" xml:space="preserve">
-    <value>Could not sync</value>
+    <value>Synchronisatie mislukt</value>
   </data>
   <data name="OK" xml:space="preserve">
     <value>OK</value>
   </data>
   <data name="AutoSyncFailed" xml:space="preserve">
-    <value>Automatic sync failed: {0}</value>
+    <value>Automatische synchronisatie mislukt: {0}</value>
   </data>
   <data name="TapDayFor" xml:space="preserve">
-    <value>Now tap a day for {0}, or drag the vehicle.</value>
+    <value>Tik nu op een dag voor {0}, of sleep het voertuig.</value>
   </data>
   <data name="DragOrTap" xml:space="preserve">
-    <value>Drag a vehicle onto a day, or tap a vehicle and then a day.</value>
+    <value>Sleep een voertuig naar een dag, of tik op een voertuig en daarna op een dag.</value>
   </data>
   <data name="AvailabilityFor" xml:space="preserve">
-    <value>Availability for {0:ddd d MMM}</value>
+    <value>Beschikbaarheid op {0:ddd d MMM}</value>
   </data>
   <data name="NoVehiclesYet" xml:space="preserve">
-    <value>No vehicles yet. Add your family's rides in Settings.</value>
+    <value>Nog geen voertuigen. Voeg de voertuigen van je gezin toe in Instellingen.</value>
   </data>
   <data name="SyncNeeded" xml:space="preserve">
-    <value>Sync needed</value>
+    <value>Synchronisatie nodig</value>
   </data>
   <data name="WithPerson" xml:space="preserve">
-    <value>With {0}</value>
+    <value>Bij {0}</value>
   </data>
   <data name="NeedsReview" xml:space="preserve">
-    <value>Needs review</value>
+    <value>Nakijken</value>
   </data>
   <data name="Available" xml:space="preserve">
-    <value>Available</value>
+    <value>Beschikbaar</value>
   </data>
   <data name="SelectOrDragVehicle" xml:space="preserve">
-    <value>Select or drag {0}</value>
+    <value>Selecteer of sleep {0}</value>
   </data>
   <data name="VehicleNameHint" xml:space="preserve">
-    <value>Select this vehicle, then choose a day, or drag it onto a day</value>
+    <value>Selecteer dit voertuig en kies dan een dag, of sleep het naar een dag</value>
   </data>
   <data name="SelectVehicle" xml:space="preserve">
-    <value>Select {0}. {1}</value>
+    <value>Selecteer {0}. {1}</value>
   </data>
   <data name="VehicleSelectHint" xml:space="preserve">
-    <value>Choose a calendar day after selecting this vehicle</value>
+    <value>Kies een dag in de agenda nadat je dit voertuig hebt geselecteerd</value>
   </data>
   <data name="DragVehicleOntoDay" xml:space="preserve">
-    <value>Drag {0} onto a calendar day.</value>
+    <value>Sleep {0} naar een dag in de agenda.</value>
   </data>
   <data name="DayHint" xml:space="preserve">
-    <value>Select this day or reserve the selected vehicle</value>
+    <value>Selecteer deze dag of reserveer het geselecteerde voertuig</value>
   </data>
   <data name="NothingPlanned" xml:space="preserve">
-    <value>Nothing planned.</value>
+    <value>Niets gepland.</value>
   </data>
   <data name="EventLabel" xml:space="preserve">
-    <value>Event</value>
+    <value>Afspraak</value>
   </data>
   <data name="NothingPlannedYet" xml:space="preserve">
-    <value>Nothing planned yet.</value>
+    <value>Nog niets gepland.</value>
   </data>
   <data name="ReservedFor" xml:space="preserve">
-    <value>{0} reserved for {1}</value>
+    <value>{0} gereserveerd voor {1}</value>
   </data>
   <data name="ConflictShort" xml:space="preserve">
     <value>, conflict</value>
   </data>
   <data name="NeedsAttention" xml:space="preserve">
-    <value>Needs attention: {0}</value>
+    <value>Vraagt aandacht: {0}</value>
   </data>
   <data name="NeedsAttentionUpper" xml:space="preserve">
-    <value>NEEDS ATTENTION: {0}</value>
+    <value>VRAAGT AANDACHT: {0}</value>
   </data>
   <data name="AllDay" xml:space="preserve">
-    <value>All day</value>
+    <value>Hele dag</value>
   </data>
   <data name="ConflictTag" xml:space="preserve">
     <value>  CONFLICT</value>
   </data>
   <data name="BookingCancelHint" xml:space="preserve">
-    <value>Open to cancel this reservation</value>
+    <value>Open om deze reservatie te annuleren</value>
   </data>
   <data name="ReleaseToReserve" xml:space="preserve">
-    <value>Release to reserve on {0:ddd d MMM}.</value>
+    <value>Loslaten om te reserveren op {0:ddd d MMM}.</value>
   </data>
   <data name="OpeningReservation" xml:space="preserve">
-    <value>Opening the reservation...</value>
+    <value>Reservatie wordt geopend...</value>
   </data>
   <data name="CantReserve" xml:space="preserve">
-    <value>Can't reserve</value>
+    <value>Reserveren niet mogelijk</value>
   </data>
   <data name="DragFromList" xml:space="preserve">
-    <value>Drag a vehicle from the vehicle list onto a day.</value>
+    <value>Sleep een voertuig uit de lijst naar een dag.</value>
   </data>
   <data name="SyncBeforeReserving" xml:space="preserve">
-    <value>Connect and sync the family calendar before making a reservation.</value>
+    <value>Verbind en synchroniseer de gezinsagenda voordat je reserveert.</value>
   </data>
   <data name="VehicleNoLongerActive" xml:space="preserve">
-    <value>That vehicle is no longer active.</value>
+    <value>Dat voertuig is niet meer actief.</value>
   </data>
   <data name="AddYourFamily" xml:space="preserve">
-    <value>Add your family</value>
+    <value>Voeg je gezin toe</value>
   </data>
   <data name="AddFamilyFirst" xml:space="preserve">
-    <value>Add at least one family member in Settings first.</value>
+    <value>Voeg eerst minstens één gezinslid toe in Instellingen.</value>
   </data>
   <data name="WhoNeeds" xml:space="preserve">
-    <value>Who needs {0} on {1:ddd d MMM}?</value>
+    <value>Wie heeft {0} nodig op {1:ddd d MMM}?</value>
   </data>
   <data name="Cancel" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Annuleren</value>
   </data>
   <data name="SavingReservation" xml:space="preserve">
-    <value>Saving {0} for {1} on {2:ddd d MMM}...</value>
+    <value>{0} voor {1} wordt opgeslagen op {2:ddd d MMM}...</value>
   </data>
   <data name="ReservationNeedsAttention" xml:space="preserve">
-    <value>Reservation needs attention</value>
+    <value>Reservatie vraagt aandacht</value>
   </data>
   <data name="ReservationSavedWithConflict" xml:space="preserve">
-    <value>The reservation was saved, but another booking or damaged reservation exists on this day. Please resolve it in the calendar.</value>
+    <value>De reservatie is opgeslagen, maar er staat op deze dag nog een boeking of een beschadigde reservatie. Los dit op in de agenda.</value>
   </data>
   <data name="ReservationSaved" xml:space="preserve">
-    <value>Reservation saved</value>
+    <value>Reservatie opgeslagen</value>
   </data>
   <data name="ReservationSavedCheckFailed" xml:space="preserve">
-    <value>The reservation was saved, but the follow-up check failed. Sync again to check for conflicts.</value>
+    <value>De reservatie is opgeslagen, maar de controle achteraf is mislukt. Synchroniseer opnieuw om op conflicten te controleren.</value>
   </data>
   <data name="ReservedAnnouncement" xml:space="preserve">
-    <value>{0} reserved for {1} on {2:dddd d MMMM}.</value>
+    <value>{0} gereserveerd voor {1} op {2:dddd d MMMM}.</value>
   </data>
   <data name="AlreadyTaken" xml:space="preserve">
-    <value>Already taken</value>
+    <value>Al bezet</value>
   </data>
   <data name="CheckCalendar" xml:space="preserve">
-    <value>Check the calendar</value>
+    <value>Controleer de agenda</value>
   </data>
   <data name="SyncBeforeChanging" xml:space="preserve">
-    <value>Sync the calendar before changing a reservation.</value>
+    <value>Synchroniseer de agenda voordat je een reservatie wijzigt.</value>
   </data>
   <data name="CancelReservationTitle" xml:space="preserve">
-    <value>Cancel this reservation?</value>
+    <value>Deze reservatie annuleren?</value>
   </data>
   <data name="CancelReservationMessage" xml:space="preserve">
-    <value>{0} is reserved for {1} on {2:dddd d MMMM}.</value>
+    <value>{0} is gereserveerd voor {1} op {2:dddd d MMMM}.</value>
   </data>
   <data name="CancelReservation" xml:space="preserve">
-    <value>Cancel reservation</value>
+    <value>Reservatie annuleren</value>
   </data>
   <data name="KeepIt" xml:space="preserve">
-    <value>Keep it</value>
+    <value>Behouden</value>
   </data>
   <data name="RemovingReservation" xml:space="preserve">
-    <value>Removing the reservation...</value>
+    <value>Reservatie wordt verwijderd...</value>
   </data>
   <data name="ReservationCanceled" xml:space="preserve">
-    <value>Reservation canceled.</value>
+    <value>Reservatie geannuleerd.</value>
   </data>
   <data name="SomethingWentWrong" xml:space="preserve">
-    <value>Something went wrong</value>
+    <value>Er ging iets mis</value>
   </data>
   <data name="Back" xml:space="preserve">
-    <value>&lt; Back</value>
+    <value>&lt; Terug</value>
   </data>
   <data name="MakeItYours" xml:space="preserve">
-    <value>Make it yours</value>
+    <value>Maak het persoonlijk</value>
   </data>
   <data name="SettingsTagline" xml:space="preserve">
-    <value>Your family, your vehicles, your calendar.</value>
+    <value>Jouw gezin, jouw voertuigen, jouw agenda.</value>
   </data>
   <data name="MicrosoftFamilyCalendar" xml:space="preserve">
-    <value>Microsoft family calendar</value>
+    <value>Microsoft-gezinsagenda</value>
   </data>
   <data name="ConnectCalendar" xml:space="preserve">
-    <value>Connect / choose calendar</value>
+    <value>Verbinden / agenda kiezen</value>
   </data>
   <data name="Disconnect" xml:space="preserve">
-    <value>Disconnect</value>
+    <value>Verbinding verbreken</value>
   </data>
   <data name="SharedSignInNote" xml:space="preserve">
-    <value>One shared sign-in is used on this dashboard. Everyone chooses their name when reserving.</value>
+    <value>Dit dashboard gebruikt één gedeelde aanmelding. Iedereen kiest zijn eigen naam bij het reserveren.</value>
   </data>
   <data name="FamilyMembers" xml:space="preserve">
-    <value>Family members</value>
+    <value>Gezinsleden</value>
   </data>
   <data name="FamilyMembersHint" xml:space="preserve">
-    <value>Add everyone who shares a ride.</value>
+    <value>Voeg iedereen toe die een voertuig deelt.</value>
   </data>
   <data name="Add" xml:space="preserve">
-    <value>+ Add</value>
+    <value>+ Toevoegen</value>
   </data>
   <data name="VehiclesAndTransport" xml:space="preserve">
-    <value>Vehicles and transport</value>
+    <value>Voertuigen en vervoer</value>
   </data>
   <data name="VehiclesHint" xml:space="preserve">
-    <value>Name each individual car, bike, or other ride.</value>
+    <value>Geef elke auto, fiets of elk ander voertuig een eigen naam.</value>
   </data>
   <data name="StorageNote" xml:space="preserve">
-    <value>Family members and vehicles are stored on this device. Reservations are stored in the selected Microsoft calendar.</value>
+    <value>Gezinsleden en voertuigen worden op dit toestel bewaard. Reservaties worden bewaard in de gekozen Microsoft-agenda.</value>
   </data>
   <data name="IconCar" xml:space="preserve">
-    <value>Car</value>
+    <value>Auto</value>
   </data>
   <data name="IconBicycle" xml:space="preserve">
-    <value>Bicycle</value>
+    <value>Fiets</value>
   </data>
   <data name="IconVan" xml:space="preserve">
-    <value>Van</value>
+    <value>Bestelwagen</value>
   </data>
   <data name="IconScooter" xml:space="preserve">
     <value>Scooter</value>
   </data>
   <data name="IconBus" xml:space="preserve">
-    <value>Bus or truck</value>
+    <value>Bus of vrachtwagen</value>
   </data>
   <data name="IconOther" xml:space="preserve">
-    <value>Other</value>
+    <value>Andere</value>
   </data>
   <data name="SampleMode" xml:space="preserve">
-    <value>Sample mode</value>
+    <value>Voorbeeldmodus</value>
   </data>
   <data name="ExitSampleFirst" xml:space="preserve">
-    <value>Return to the calendar and exit the sample before connecting your own calendar.</value>
+    <value>Ga terug naar de agenda en sluit het voorbeeld voordat je je eigen agenda verbindt.</value>
   </data>
   <data name="NoEditableCalendars" xml:space="preserve">
-    <value>No editable calendars</value>
+    <value>Geen bewerkbare agenda's</value>
   </data>
   <data name="NoEditableCalendarsMessage" xml:space="preserve">
-    <value>Microsoft did not return an editable calendar for this account. Try signing in as the calendar owner; some shared or group calendars may not be available through Microsoft Graph.</value>
+    <value>Microsoft gaf geen bewerkbare agenda terug voor dit account. Meld je aan als eigenaar van de agenda; sommige gedeelde of groepsagenda's zijn mogelijk niet beschikbaar via Microsoft Graph.</value>
   </data>
   <data name="ChooseCalendarFor" xml:space="preserve">
-    <value>Choose a calendar for {0}</value>
+    <value>Kies een agenda voor {0}</value>
   </data>
   <data name="ChangeCalendarTitle" xml:space="preserve">
-    <value>Change calendar?</value>
+    <value>Agenda wijzigen?</value>
   </data>
   <data name="ChangeCalendarMessage" xml:space="preserve">
-    <value>Existing reservations stay in the old calendar. This dashboard will show reservations from the newly selected calendar.</value>
+    <value>Bestaande reservaties blijven in de oude agenda. Dit dashboard toont de reservaties uit de nieuw gekozen agenda.</value>
   </data>
   <data name="ChangeCalendar" xml:space="preserve">
-    <value>Change calendar</value>
+    <value>Agenda wijzigen</value>
   </data>
   <data name="KeepCurrent" xml:space="preserve">
-    <value>Keep current</value>
+    <value>Huidige behouden</value>
   </data>
   <data name="DisconnectTitle" xml:space="preserve">
-    <value>Disconnect Microsoft?</value>
+    <value>Verbinding met Microsoft verbreken?</value>
   </data>
   <data name="DisconnectMessage" xml:space="preserve">
-    <value>Reservations stay in the Microsoft calendar. This dashboard will need to be connected again.</value>
+    <value>Reservaties blijven in de Microsoft-agenda. Dit dashboard moet daarna opnieuw verbonden worden.</value>
   </data>
   <data name="KeepConnected" xml:space="preserve">
-    <value>Keep connected</value>
+    <value>Verbonden blijven</value>
   </data>
   <data name="SampleModeSettings" xml:space="preserve">
-    <value>Sample mode: these changes are temporary and never reach your Microsoft calendar.</value>
+    <value>Voorbeeldmodus: deze wijzigingen zijn tijdelijk en komen nooit in je Microsoft-agenda terecht.</value>
   </data>
   <data name="NotConnected" xml:space="preserve">
-    <value>Not connected. Sign in once, then choose your existing family calendar.</value>
+    <value>Niet verbonden. Meld je één keer aan en kies daarna je bestaande gezinsagenda.</value>
   </data>
   <data name="SelectedCalendar" xml:space="preserve">
-    <value>Selected: {0}</value>
+    <value>Gekozen: {0}</value>
   </data>
   <data name="NoFamilyMembers" xml:space="preserve">
-    <value>No family members added yet.</value>
+    <value>Nog geen gezinsleden toegevoegd.</value>
   </data>
   <data name="FamilyMember" xml:space="preserve">
-    <value>Family member</value>
+    <value>Gezinslid</value>
   </data>
   <data name="Hidden" xml:space="preserve">
-    <value>Hidden</value>
+    <value>Verborgen</value>
   </data>
   <data name="NoVehiclesAdded" xml:space="preserve">
-    <value>No vehicles added yet.</value>
+    <value>Nog geen voertuigen toegevoegd.</value>
   </data>
   <data name="TypeHidden" xml:space="preserve">
-    <value>{0} - hidden</value>
+    <value>{0} - verborgen</value>
   </data>
   <data name="Edit" xml:space="preserve">
-    <value>Edit</value>
+    <value>Bewerken</value>
   </data>
   <data name="Hide" xml:space="preserve">
-    <value>Hide</value>
+    <value>Verbergen</value>
   </data>
   <data name="Restore" xml:space="preserve">
-    <value>Restore</value>
+    <value>Herstellen</value>
   </data>
   <data name="AddFamilyMember" xml:space="preserve">
-    <value>Add a family member</value>
+    <value>Gezinslid toevoegen</value>
   </data>
   <data name="EditFamilyMember" xml:space="preserve">
-    <value>Edit family member</value>
+    <value>Gezinslid bewerken</value>
   </data>
   <data name="NamePrompt" xml:space="preserve">
-    <value>What name should appear on the calendar?</value>
+    <value>Welke naam moet in de agenda verschijnen?</value>
   </data>
   <data name="Save" xml:space="preserve">
-    <value>Save</value>
+    <value>Opslaan</value>
   </data>
   <data name="NamePlaceholder" xml:space="preserve">
-    <value>Name</value>
+    <value>Naam</value>
   </data>
   <data name="EnterName" xml:space="preserve">
-    <value>Please enter a name.</value>
+    <value>Vul een naam in.</value>
   </data>
   <data name="NameExists" xml:space="preserve">
-    <value>That name already exists. Restore the hidden person instead if needed.</value>
+    <value>Die naam bestaat al. Herstel indien nodig de verborgen persoon.</value>
   </data>
   <data name="AddVehicle" xml:space="preserve">
-    <value>Add a vehicle</value>
+    <value>Voertuig toevoegen</value>
   </data>
   <data name="EditVehicle" xml:space="preserve">
-    <value>Edit vehicle</value>
+    <value>Voertuig bewerken</value>
   </data>
   <data name="VehicleNamePrompt" xml:space="preserve">
-    <value>Give this individual vehicle a name, like Blue car or E-bike 1.</value>
+    <value>Geef dit voertuig een eigen naam, zoals Blauwe auto of E-bike 1.</value>
   </data>
   <data name="Next" xml:space="preserve">
-    <value>Next</value>
+    <value>Volgende</value>
   </data>
   <data name="VehicleNamePlaceholder" xml:space="preserve">
-    <value>Vehicle name</value>
+    <value>Naam van het voertuig</value>
   </data>
   <data name="EnterVehicleName" xml:space="preserve">
-    <value>Please enter a vehicle name.</value>
+    <value>Vul een naam voor het voertuig in.</value>
   </data>
   <data name="VehicleNameExists" xml:space="preserve">
-    <value>That vehicle name already exists. Restore the hidden vehicle instead if needed.</value>
+    <value>Die voertuignaam bestaat al. Herstel indien nodig het verborgen voertuig.</value>
   </data>
   <data name="TransportTypeTitle" xml:space="preserve">
-    <value>Type of transport</value>
+    <value>Soort vervoer</value>
   </data>
   <data name="TransportTypePrompt" xml:space="preserve">
-    <value>You can use any type, such as electric bike or cargo bike.</value>
+    <value>Je kunt elk type gebruiken, zoals elektrische fiets of bakfiets.</value>
   </data>
   <data name="TransportTypePlaceholder" xml:space="preserve">
-    <value>Transport type</value>
+    <value>Soort vervoer</value>
   </data>
   <data name="EnterTransportType" xml:space="preserve">
-    <value>Please enter a transport type.</value>
+    <value>Vul een soort vervoer in.</value>
   </data>
   <data name="ChoosePicture" xml:space="preserve">
-    <value>Choose a picture for this vehicle</value>
+    <value>Kies een afbeelding voor dit voertuig</value>
   </data>
   <data name="HideFamilyMemberTitle" xml:space="preserve">
-    <value>Hide family member?</value>
+    <value>Gezinslid verbergen?</value>
   </data>
   <data name="HideFamilyMemberMessage" xml:space="preserve">
-    <value>Hide {0} from new reservations? Existing reservations stay on the calendar. You can restore them later.</value>
+    <value>{0} verbergen voor nieuwe reservaties? Bestaande reservaties blijven in de agenda. Je kunt deze persoon later herstellen.</value>
   </data>
   <data name="Keep" xml:space="preserve">
-    <value>Keep</value>
+    <value>Behouden</value>
   </data>
   <data name="HideVehicleTitle" xml:space="preserve">
-    <value>Hide vehicle?</value>
+    <value>Voertuig verbergen?</value>
   </data>
   <data name="HideVehicleMessage" xml:space="preserve">
-    <value>Hide {0} from new reservations? Existing reservations stay on the calendar. You can restore it later.</value>
+    <value>{0} verbergen voor nieuwe reservaties? Bestaande reservaties blijven in de agenda. Je kunt het later herstellen.</value>
   </data>
   <data name="CouldNotSave" xml:space="preserve">
-    <value>Could not save</value>
+    <value>Opslaan mislukt</value>
   </data>
   <data name="AndroidSignInUnavailable" xml:space="preserve">
-    <value>The Android sign-in window is unavailable.</value>
+    <value>Het Android-aanmeldvenster is niet beschikbaar.</value>
   </data>
   <data name="WindowsSignInUnavailable" xml:space="preserve">
-    <value>The Windows sign-in window is unavailable.</value>
+    <value>Het Windows-aanmeldvenster is niet beschikbaar.</value>
   </data>
   <data name="OpenDay" xml:space="preserve">
-    <value>Open day - drop a vehicle here</value>
+    <value>Vrije dag - sleep hier een voertuig naartoe</value>
+  </data>
+  <data name="DeviceCodeInstruction" xml:space="preserve">
+    <value>Ga op je telefoon naar {0} en voer deze code in:</value>
+  </data>
+  <data name="SignInCodeExpiredTitle" xml:space="preserve">
+    <value>Code verlopen</value>
+  </data>
+  <data name="SignInCodeExpiredMessage" xml:space="preserve">
+    <value>De aanmeldcode is verlopen. Probeer de agenda opnieuw te koppelen voor een nieuwe code.</value>
+  </data>
+  <data name="CarAgendaTitle" xml:space="preserve">
+    <value>Family Wheels</value>
+  </data>
+  <data name="CarLoading" xml:space="preserve">
+    <value>Reservaties laden…</value>
+  </data>
+  <data name="CarRefresh" xml:space="preserve">
+    <value>Vernieuwen</value>
+  </data>
+  <data name="CarNoReservations" xml:space="preserve">
+    <value>Geen reservaties in de komende dagen.</value>
+  </data>
+  <data name="CarSetupRequired" xml:space="preserve">
+    <value>Open Family Wheels terwijl je geparkeerd staat om je aan te melden en een agenda te kiezen.</value>
+  </data>
+  <data name="CarLoadFailed" xml:space="preserve">
+    <value>Kon de reservaties niet laden. Controleer de verbinding en probeer opnieuw.</value>
+  </data>
+  <data name="CarReservationTitle" xml:space="preserve">
+    <value>{0} – {1}</value>
+  </data>
+  <data name="CarSampleSuffix" xml:space="preserve">
+    <value>{0} (voorbeeld)</value>
   </data>
 </root>

@@ -7,6 +7,16 @@ using Windows.Security.Cryptography.DataProtection;
 
 namespace VehicleCalendarPlanner.Services;
 
+public enum SignInMode
+{
+    /// <summary>Browser-based sign-in on this device.</summary>
+    Interactive,
+    /// <summary>Show a short code and sign in on another device (for screens without a usable browser, like cars).</summary>
+    DeviceCode
+}
+
+public sealed record DeviceCodePrompt(string VerificationUrl, string UserCode, DateTimeOffset ExpiresOn);
+
 public sealed class MicrosoftSignIn : IAccessTokenProvider
 {
     // Public application registration ID, not a secret.
@@ -18,12 +28,15 @@ public sealed class MicrosoftSignIn : IAccessTokenProvider
     private readonly IPublicClientApplication _client;
     private readonly SemaphoreSlim _gate = new(1, 1);
 
-    public MicrosoftSignIn()
+    public MicrosoftSignIn(SignInMode mode = SignInMode.Interactive)
     {
+        Mode = mode;
         var builder = PublicClientApplicationBuilder.Create(ClientId)
             .WithAuthority(AadAuthorityAudience.PersonalMicrosoftAccount);
 #if ANDROID
-        builder = builder.WithRedirectUri(AndroidRedirectUri);
+        builder = mode == SignInMode.Interactive
+            ? builder.WithRedirectUri(AndroidRedirectUri)
+            : builder.WithDefaultRedirectUri();
 #else
         builder = builder.WithDefaultRedirectUri();
 #endif
@@ -57,7 +70,14 @@ public sealed class MicrosoftSignIn : IAccessTokenProvider
         }
     }
 
-    public async Task<string> SignInAsync(CancellationToken cancellationToken = default)
+    public SignInMode Mode { get; }
+
+    /// <param name="showDeviceCode">
+    /// Required in <see cref="SignInMode.DeviceCode"/>. Must return without waiting for the user,
+    /// because sign-in only starts polling once it completes.
+    /// </param>
+    public async Task<string> SignInAsync(
+        Func<DeviceCodePrompt, Task>? showDeviceCode = null, CancellationToken cancellationToken = default)
     {
         await _gate.WaitAsync(cancellationToken);
         try
@@ -75,6 +95,15 @@ public sealed class MicrosoftSignIn : IAccessTokenProvider
                 {
                     // A first-time calendar permission grant needs an interactive sign-in.
                 }
+            }
+
+            if (Mode == SignInMode.DeviceCode)
+            {
+                ArgumentNullException.ThrowIfNull(showDeviceCode);
+                var deviceResult = await _client.AcquireTokenWithDeviceCode(Scopes, code =>
+                        showDeviceCode(new DeviceCodePrompt(code.VerificationUrl, code.UserCode, code.ExpiresOn)))
+                    .ExecuteAsync(cancellationToken);
+                return deviceResult.Account.Username;
             }
 
             var interactive = _client.AcquireTokenInteractive(Scopes);
